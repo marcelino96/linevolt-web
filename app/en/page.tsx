@@ -649,9 +649,9 @@ function AdvatekSection() {
                         <div className="grid md:grid-cols-3 gap-4">
                             {products.map((p, i) => (
                                 <motion.div key={i} initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay: 0.2 + i * 0.1 }} className="rounded-2xl overflow-hidden border border-white/6 bg-white/3 hover:border-orange-400/25 hover:bg-orange-400/5 transition-all duration-300">
-                                    <div className="relative w-full h-36 bg-[#0a0a0a] flex items-center justify-center border-b border-white/6">
+                                    <div className="relative w-full h-52 bg-[#0a0a0a] flex items-center justify-center border-b border-white/6">
                                         <div className="relative w-full h-full">
-                                            <Image src={`/images/advatek/${p.slug}.webp`} alt={p.model} fill className="object-contain p-4" />
+                                            <Image src={`/images/advatek/${p.slug}.webp`} alt={p.model} fill className="object-contain p-2" />
                                         </div>
                                     </div>
                                     <div className="p-5">
