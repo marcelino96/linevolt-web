@@ -257,8 +257,14 @@ function Services() {
     );
 }
 
-const PORTFOLIO_TABS_EN = [
+const PORTFOLIO_MAIN_TABS_EN = [
     { key: "all", label: "All" },
+    { key: "led", label: "Led Strip Addressable" },
+    { key: "videotron", label: "Videotron" },
+];
+
+const PORTFOLIO_LED_SUBTABS_EN = [
+    { key: "all-led", label: "All" },
     { key: "installation", label: "Installation" },
     { key: "event", label: "Event" },
 ];
@@ -270,8 +276,19 @@ type PortfolioProjectEN = {
 
 function Portfolio() {
     const [activeTab, setActiveTab] = useState("all");
+    const [activeLedSub, setActiveLedSub] = useState("all-led");
     const allProjects = PORTFOLIO as PortfolioProjectEN[];
-    const filtered = activeTab === "all" ? allProjects : allProjects.filter(p => p.category === activeTab);
+
+    const filtered = (() => {
+        if (activeTab === "videotron") return allProjects.filter(p => p.category === "videotron");
+        if (activeTab === "led") {
+            const ledProjects = allProjects.filter(p => p.category === "installation" || p.category === "event");
+            if (activeLedSub === "installation") return ledProjects.filter(p => p.category === "installation");
+            if (activeLedSub === "event") return ledProjects.filter(p => p.category === "event");
+            return ledProjects;
+        }
+        return allProjects;
+    })();
 
     return (
         <section id="portfolio" className="relative py-32 overflow-hidden">
@@ -287,11 +304,15 @@ function Portfolio() {
                     </motion.p>
                 </div>
 
-                <motion.div variants={fadeUp} className="flex items-center justify-center gap-2 mb-10">
-                    {PORTFOLIO_TABS_EN.map(tab => (
+                {/* Main tabs */}
+                <motion.div variants={fadeUp} className="flex items-center justify-center gap-2 mb-3">
+                    {PORTFOLIO_MAIN_TABS_EN.map(tab => (
                         <button
                             key={tab.key}
-                            onClick={() => setActiveTab(tab.key)}
+                            onClick={() => {
+                                setActiveTab(tab.key);
+                                setActiveLedSub("all-led");
+                            }}
                             className={`px-5 py-2 rounded-full text-sm font-semibold transition-all duration-300 ${
                                 activeTab === tab.key
                                     ? "bg-orange-500 text-white shadow-[0_0_20px_rgba(249,115,22,0.4)]"
@@ -299,6 +320,28 @@ function Portfolio() {
                             }`}
                         >
                             {tab.label}
+                        </button>
+                    ))}
+                </motion.div>
+
+                {/* LED sub-tabs — visible only when "led" is active */}
+                <motion.div
+                    variants={fadeUp}
+                    className={`flex items-center justify-center gap-2 mb-10 transition-all duration-300 ${
+                        activeTab === "led" ? "opacity-100 h-auto mt-3" : "opacity-0 h-0 overflow-hidden pointer-events-none"
+                    }`}
+                >
+                    {PORTFOLIO_LED_SUBTABS_EN.map(sub => (
+                        <button
+                            key={sub.key}
+                            onClick={() => setActiveLedSub(sub.key)}
+                            className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-300 ${
+                                activeLedSub === sub.key
+                                    ? "bg-orange-400/20 border border-orange-400/60 text-orange-400"
+                                    : "border border-white/10 text-gray-500 hover:border-white/25 hover:text-gray-300"
+                            }`}
+                        >
+                            {sub.label}
                         </button>
                     ))}
                 </motion.div>
@@ -401,7 +444,7 @@ function VideoShowcase() {
 
 function WhyUs() {
     return (
-        <section id="why-us" className="relative py-32 overflow-hidden">
+        <section id="why-us" className="relative pt-32 pb-12 overflow-hidden">
             <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 70% 60% at 50% 50%, rgba(249,115,22,0.04) 0%, transparent 70%)" }} />
             <AnimatedSection className="max-w-7xl mx-auto px-6">
                 <div className="text-center mb-16">
@@ -465,18 +508,28 @@ function CTABanner() {
 function Contact() {
     const [submitted, setSubmitted] = useState(false);
     const [submitting, setSubmitting] = useState(false);
+    const [waUrl, setWaUrl] = useState("https://wa.me/62817771343");
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setSubmitting(true);
         const form = e.currentTarget;
         const data = new FormData(form);
+        const name = (data.get("name") as string) || "";
+        const phone = (data.get("phone") as string) || "";
+        const venue = (data.get("venue") as string) || "-";
+        const location = (data.get("location") as string) || "-";
+        const message = (data.get("message") as string) || "-";
+
         try {
-            await fetch("/", { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: new URLSearchParams(data as unknown as Record<string, string>).toString() });
-            setSubmitted(true);
+            await fetch("/netlify-form.html", { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: new URLSearchParams(data as unknown as Record<string, string>).toString() });
         } catch {
-            setSubmitted(true);
+            // ignore
         }
+
+        const text = `Hello Linevolt! I just filled in the form on your website.\n\nName: ${name}\nPhone: ${phone}\nVenue/Project: ${venue}\nLocation: ${location}\nRequirements: ${message}`;
+        setWaUrl(`https://wa.me/62817771343?text=${encodeURIComponent(text)}`);
+        setSubmitted(true);
         setSubmitting(false);
     };
 
@@ -519,8 +572,9 @@ function Contact() {
                                         <CheckCircle2 size={28} className="text-orange-400" />
                                     </div>
                                     <h4 className="text-white font-bold text-lg mb-2">Message Sent!</h4>
-                                    <p className="text-gray-400 text-sm">Our team will contact you within 24 hours.</p>
-                                    <a href="https://wa.me/62817771343?text=Hello%20Linevolt%2C%20I%20would%20like%20to%20ask%20about%20your%20lighting%20services" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 mt-6 px-5 py-2.5 bg-orange-500 text-white text-sm font-bold rounded-full hover:bg-orange-400 transition-colors">Chat on WhatsApp Now</a>
+                                    <p className="text-gray-400 text-sm mb-1">Our team will contact you within 24 hours.</p>
+                                    <p className="text-gray-500 text-xs mb-6">Or continue directly via WhatsApp below.</p>
+                                    <a href={waUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 bg-orange-500 text-white text-sm font-bold rounded-full hover:bg-orange-400 transition-colors">Chat on WhatsApp Now</a>
                                 </div>
                             ) : (
                                 <form name="contact-en" method="POST" data-netlify="true" onSubmit={handleSubmit} className="space-y-4">
@@ -528,6 +582,10 @@ function Contact() {
                                     <div>
                                         <label className="block text-xs text-gray-500 mb-1.5">Your Name</label>
                                         <input type="text" name="name" placeholder="John Doe" required className="w-full bg-[#0a0a0a] border border-white/8 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-700 focus:outline-none focus:border-orange-400/50 focus:shadow-[0_0_0_3px_rgba(249,115,22,0.08)] transition-all" />
+                                    </div>
+                                    <div>
+                                        <label className="block text-xs text-gray-500 mb-1.5">Phone / WhatsApp Number</label>
+                                        <input type="tel" name="phone" placeholder="+62 812-3456-7890" required className="w-full bg-[#0a0a0a] border border-white/8 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-700 focus:outline-none focus:border-orange-400/50 focus:shadow-[0_0_0_3px_rgba(249,115,22,0.08)] transition-all" />
                                     </div>
                                     <div>
                                         <label className="block text-xs text-gray-500 mb-1.5">Venue / Project Name</label>
@@ -596,9 +654,9 @@ function AdvatekSection() {
     const ref = useRef<HTMLDivElement>(null);
     const inView = useInView(ref, { once: true, margin: "-80px" });
     const products = [
-        { model: "PixLite® A4-S Mk3", slug: "a4s-mk3", desc: "Up to 24 universes, sleek design, electrical fault protection. Ideal for professional commercial installs.", href: "https://www.advateklighting.com/products/collections/professional-pixel-control/pixlite-a4s-mk3" },
-        { model: "PixLite® E16-S Mk3", slug: "e16s-mk3", desc: "Most cost-efficient 16-output controller. Drives up to 96 universes — perfect for large-scale projects.", href: "https://www.advateklighting.com/products/collections/professional-pixel-control/pixlite-e16s-mk3" },
-        { model: "PixLite® T8-S Mk3", slug: "t8s-mk3", desc: "Long-range 300m data transmission. High-impact solution for distributed and outdoor installations.", href: "https://www.advateklighting.com/products/collections/professional-pixel-control/pixlite-t8s-mk3" },
+        { model: "PixLite® A4-S Mk3", slug: "a4s-mk3", desc: "Up to 24 universes, sleek design, electrical fault protection. Ideal for professional commercial installs.", href: "https://www.advateklighting.com/products/a4-s-mk3" },
+        { model: "PixLite® E16-S Mk3", slug: "e16s-mk3", desc: "Most cost-efficient 16-output controller. Drives up to 96 universes — perfect for large-scale projects.", href: "https://www.advateklighting.com/products/e16-s-mk3" },
+        { model: "PixLite® T8-S Mk3", slug: "t8s-mk3", desc: "Long-range 300m data transmission. High-impact solution for distributed and outdoor installations.", href: "https://www.advateklighting.com/products/t8-s-mk3" },
     ];
     return (
         <section ref={ref} className="relative py-28 overflow-hidden">
@@ -634,9 +692,9 @@ function AdvatekSection() {
                         <div className="grid md:grid-cols-3 gap-4">
                             {products.map((p, i) => (
                                 <motion.div key={i} initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay: 0.2 + i * 0.1 }} className="rounded-2xl overflow-hidden border border-white/6 bg-white/3 hover:border-orange-400/25 hover:bg-orange-400/5 transition-all duration-300">
-                                    <div className="relative w-full h-36 bg-[#0a0a0a] flex items-center justify-center border-b border-white/6">
+                                    <div className="relative w-full h-52 bg-[#0a0a0a] flex items-center justify-center border-b border-white/6">
                                         <div className="relative w-full h-full">
-                                            <Image src={`/images/advatek/${p.slug}.jpg`} alt={p.model} fill className="object-contain p-4" />
+                                            <Image src={`/images/advatek/${p.slug}.webp`} alt={p.model} fill className="object-contain p-2" />
                                         </div>
                                     </div>
                                     <div className="p-5">
