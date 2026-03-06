@@ -7,58 +7,5 @@
     "publishedAt": "2025-02-05",
     "readTime": "6 menit",
     "author": "Tim Linevolt",
-    "content": [
-        {
-            "type": "paragraph",
-            "text": "Di sektor hospitality, ada ungkapan yang sering dipakai desainer interior: 'you never get a second chance to make a first impression.' Lobby bukan sekadar ruang transisi — ini adalah statement pertama tentang standar hotel Anda. Addressable LED strip, ketika diprogram dengan benar, dapat mentransformasi lobby dari sekadar 'terang' menjadi sebuah pengalaman imersif."
-        },
-        {
-            "type": "heading",
-            "text": "Prinsip Lighting Hospitality: Layering"
-        },
-        {
-            "type": "paragraph",
-            "text": "Sistem lighting hotel yang efektif terdiri dari tiga layer: ambient (pencahayaan umum, biasanya dari downlight atau cove), accent (menonjolkan elemen arsitektur atau seni), dan decorative (addressable LED sebagai elemen visual). Addressable LED paling efektif berperan di layer accent dan decorative — bukan sebagai sumber cahaya utama, melainkan sebagai elemen yang menciptakan karakter ruang."
-        },
-        {
-            "type": "heading",
-            "text": "Zona Resepsionis: Slow Breathing Effect"
-        },
-        {
-            "type": "paragraph",
-            "text": "Meja resepsionis adalah focal point utama. Pasang strip SK6812 RGBW di bawah counter dengan efek 'slow breathing' — brightness yang naik-turun sangat perlahan (siklus 8-12 detik) dalam warm white 2700K. Efek ini secara psikologis menciptakan ketenangan tanpa terasa statis. Hindari warna selain warm tones di area ini — cold blue atau saturated color akan terasa tidak profesional di konteks hospitality."
-        },
-        {
-            "type": "heading",
-            "text": "Ceiling Installation: Starfield atau Aurora Effect"
-        },
-        {
-            "type": "paragraph",
-            "text": "Untuk lobby dengan ceiling tinggi, grid LED dengan density rendah (30 LED/m) yang diprogram sebagai 'starfield' menciptakan kesan ruang yang dalam dan mewah. Alternatifnya, cove lighting dengan efek aurora slow-moving (biru-hijau atau warm amber) mengikuti kontur arsitektur ceiling. Kunci: refresh rate harus >30fps untuk memastikan efek terlihat smooth, bukan jerky."
-        },
-        {
-            "type": "heading",
-            "text": "Pathway dan Transition Areas"
-        },
-        {
-            "type": "paragraph",
-            "text": "Strip di sepanjang koridor atau di bawah tangga bisa diprogram dengan 'sequential sweep' yang bergerak ke arah tamu berjalan — subtle directional cue yang secara intuitif memandu movement tanpa signage. Program kecepatan di 0.3-0.5 meter per detik untuk efek yang terasa natural, bukan agressif."
-        },
-        {
-            "type": "heading",
-            "text": "Integrasi dengan Building Management System"
-        },
-        {
-            "type": "paragraph",
-            "text": "Hotel premium mengintegrasikan lighting control dengan BMS (Building Management System). Addressable LED controller yang mendukung DMX, Art-Net, atau Modbus bisa menerima trigger dari BMS untuk automasi berdasarkan waktu atau kondisi: mode 'Check-in Peak Hours' (energetik, lebih terang), 'Evening Quiet' (warm dim), 'Night Mode' (minimal, hanya guiding lights). Ini memangkas konsumsi energi sekaligus meningkatkan konsistensi experience."
-        },
-        {
-            "type": "heading",
-            "text": "Case Study: Instalasi Lobby Hotel Boutique Jakarta"
-        },
-        {
-            "type": "paragraph",
-            "text": "Sebuah hotel boutique di Jakarta Selatan dengan lobby 200m² menggunakan 450 meter SK6812 RGBW di cove ceiling (berlapis tiga), counter resepsionis, dan pathway. Sistem dikontrol dengan scheduling otomatis: pagi hari (07:00-10:00) dalam neutral white yang invigorating, siang (10:00-18:00) warm white relaxed, malam (18:00-midnight) deep amber dengan slow aurora accent, dini hari (midnight-07:00) minimal guiding mode. Feedback tamu tentang atmosphere naik signifikan dalam tiga bulan pertama post-instalasi."
-        }
-    ]
+    "content": "Di sektor hospitality, ada ungkapan yang sering dipakai desainer interior: 'you never get a second chance to make a first impression.' Lobby bukan sekadar ruang transisi — ini adalah statement pertama tentang standar hotel Anda. Addressable LED strip, ketika diprogram dengan benar, dapat mentransformasi lobby dari sekadar 'terang' menjadi sebuah pengalaman imersif.\n\n## Prinsip Lighting Hospitality: Layering\n\nSistem lighting hotel yang efektif terdiri dari tiga layer: ambient (pencahayaan umum, biasanya dari downlight atau cove), accent (menonjolkan elemen arsitektur atau seni), dan decorative (addressable LED sebagai elemen visual). Addressable LED paling efektif berperan di layer accent dan decorative — bukan sebagai sumber cahaya utama, melainkan sebagai elemen yang menciptakan karakter ruang.\n\n## Zona Resepsionis: Slow Breathing Effect\n\nMeja resepsionis adalah focal point utama. Pasang strip SK6812 RGBW di bawah counter dengan efek 'slow breathing' — brightness yang naik-turun sangat perlahan (siklus 8-12 detik) dalam warm white 2700K. Efek ini secara psikologis menciptakan ketenangan tanpa terasa statis. Hindari warna selain warm tones di area ini — cold blue atau saturated color akan terasa tidak profesional di konteks hospitality.\n\n## Ceiling Installation: Starfield atau Aurora Effect\n\nUntuk lobby dengan ceiling tinggi, grid LED dengan density rendah (30 LED/m) yang diprogram sebagai 'starfield' menciptakan kesan ruang yang dalam dan mewah. Alternatifnya, cove lighting dengan efek aurora slow-moving (biru-hijau atau warm amber) mengikuti kontur arsitektur ceiling. Kunci: refresh rate harus >30fps untuk memastikan efek terlihat smooth, bukan jerky.\n\n## Pathway dan Transition Areas\n\nStrip di sepanjang koridor atau di bawah tangga bisa diprogram dengan 'sequential sweep' yang bergerak ke arah tamu berjalan — subtle directional cue yang secara intuitif memandu movement tanpa signage. Program kecepatan di 0.3-0.5 meter per detik untuk efek yang terasa natural, bukan agressif.\n\n## Integrasi dengan Building Management System\n\nHotel premium mengintegrasikan lighting control dengan BMS (Building Management System). Addressable LED controller yang mendukung DMX, Art-Net, atau Modbus bisa menerima trigger dari BMS untuk automasi berdasarkan waktu atau kondisi: mode 'Check-in Peak Hours' (energetik, lebih terang), 'Evening Quiet' (warm dim), 'Night Mode' (minimal, hanya guiding lights). Ini memangkas konsumsi energi sekaligus meningkatkan konsistensi experience.\n\n## Case Study: Instalasi Lobby Hotel Boutique Jakarta\n\nSebuah hotel boutique di Jakarta Selatan dengan lobby 200m² menggunakan 450 meter SK6812 RGBW di cove ceiling (berlapis tiga), counter resepsionis, dan pathway. Sistem dikontrol dengan scheduling otomatis: pagi hari (07:00-10:00) dalam neutral white yang invigorating, siang (10:00-18:00) warm white relaxed, malam (18:00-midnight) deep amber dengan slow aurora accent, dini hari (midnight-07:00) minimal guiding mode. Feedback tamu tentang atmosphere naik signifikan dalam tiga bulan pertama post-instalasi."
 }
