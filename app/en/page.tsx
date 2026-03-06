@@ -465,18 +465,28 @@ function CTABanner() {
 function Contact() {
     const [submitted, setSubmitted] = useState(false);
     const [submitting, setSubmitting] = useState(false);
+    const [waUrl, setWaUrl] = useState("https://wa.me/62817771343");
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setSubmitting(true);
         const form = e.currentTarget;
         const data = new FormData(form);
+        const name = (data.get("name") as string) || "";
+        const phone = (data.get("phone") as string) || "";
+        const venue = (data.get("venue") as string) || "-";
+        const location = (data.get("location") as string) || "-";
+        const message = (data.get("message") as string) || "-";
+
         try {
-            await fetch("/", { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: new URLSearchParams(data as unknown as Record<string, string>).toString() });
-            setSubmitted(true);
+            await fetch("/netlify-form.html", { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: new URLSearchParams(data as unknown as Record<string, string>).toString() });
         } catch {
-            setSubmitted(true);
+            // ignore
         }
+
+        const text = `Hello Linevolt! I just filled in the form on your website.\n\nName: ${name}\nPhone: ${phone}\nVenue/Project: ${venue}\nLocation: ${location}\nRequirements: ${message}`;
+        setWaUrl(`https://wa.me/62817771343?text=${encodeURIComponent(text)}`);
+        setSubmitted(true);
         setSubmitting(false);
     };
 
@@ -519,8 +529,9 @@ function Contact() {
                                         <CheckCircle2 size={28} className="text-orange-400" />
                                     </div>
                                     <h4 className="text-white font-bold text-lg mb-2">Message Sent!</h4>
-                                    <p className="text-gray-400 text-sm">Our team will contact you within 24 hours.</p>
-                                    <a href="https://wa.me/62817771343?text=Hello%20Linevolt%2C%20I%20would%20like%20to%20ask%20about%20your%20lighting%20services" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 mt-6 px-5 py-2.5 bg-orange-500 text-white text-sm font-bold rounded-full hover:bg-orange-400 transition-colors">Chat on WhatsApp Now</a>
+                                    <p className="text-gray-400 text-sm mb-1">Our team will contact you within 24 hours.</p>
+                                    <p className="text-gray-500 text-xs mb-6">Or continue directly via WhatsApp below.</p>
+                                    <a href={waUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 bg-orange-500 text-white text-sm font-bold rounded-full hover:bg-orange-400 transition-colors">Chat on WhatsApp Now</a>
                                 </div>
                             ) : (
                                 <form name="contact-en" method="POST" data-netlify="true" onSubmit={handleSubmit} className="space-y-4">
@@ -528,6 +539,10 @@ function Contact() {
                                     <div>
                                         <label className="block text-xs text-gray-500 mb-1.5">Your Name</label>
                                         <input type="text" name="name" placeholder="John Doe" required className="w-full bg-[#0a0a0a] border border-white/8 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-700 focus:outline-none focus:border-orange-400/50 focus:shadow-[0_0_0_3px_rgba(249,115,22,0.08)] transition-all" />
+                                    </div>
+                                    <div>
+                                        <label className="block text-xs text-gray-500 mb-1.5">Phone / WhatsApp Number</label>
+                                        <input type="tel" name="phone" placeholder="+62 812-3456-7890" required className="w-full bg-[#0a0a0a] border border-white/8 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-700 focus:outline-none focus:border-orange-400/50 focus:shadow-[0_0_0_3px_rgba(249,115,22,0.08)] transition-all" />
                                     </div>
                                     <div>
                                         <label className="block text-xs text-gray-500 mb-1.5">Venue / Project Name</label>
