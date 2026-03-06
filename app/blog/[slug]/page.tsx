@@ -68,6 +68,18 @@ function formatDate(dateStr: string) {
     return new Date(dateStr).toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" });
 }
 
+// Normalize content that may be stored as an array of {type, text} objects
+function normalizeContent(content: unknown): string {
+    if (typeof content === 'string') return content;
+    if (Array.isArray(content)) {
+        return content.map((block: { type?: string; text?: string }) => {
+            if (block.type === 'heading') return `## ${block.text ?? ''}`;
+            return block.text ?? '';
+        }).join('\n\n');
+    }
+    return '';
+}
+
 // Simple markdown-to-HTML renderer for content
 function renderContent(md: string): string {
     return md
@@ -178,7 +190,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                 {/* Content */}
                 <div
                     className="prose-custom"
-                    dangerouslySetInnerHTML={{ __html: renderContent(post.content) }}
+                    dangerouslySetInnerHTML={{ __html: renderContent(normalizeContent(post.content)) }}
                 />
 
                 {/* CTA */}
