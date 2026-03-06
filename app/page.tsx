@@ -796,7 +796,7 @@ function VideoShowcase() {
 
 function WhyUs() {
   return (
-    <section id="why-us" className="relative py-32 overflow-hidden">
+    <section id="why-us" className="relative pt-32 pb-12 overflow-hidden">
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
@@ -1024,7 +1024,7 @@ function BlogPreview() {
   if (posts.length === 0) return null;
 
   return (
-    <section ref={ref} id="blog-preview" className="relative py-32 overflow-hidden">
+    <section ref={ref} id="blog-preview" className="relative pt-20 pb-12 overflow-hidden">
       <div className="divider-gradient mb-20 mx-8" />
       <div className="max-w-7xl mx-auto px-6">
         <motion.div initial={{ opacity: 0, y: 30 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.7 }} className="flex items-end justify-between mb-12">
@@ -1136,9 +1136,9 @@ function AdvatekSection() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
   const products = [
-    { model: "PixLite® A4-S Mk3", slug: "a4s-mk3", desc: "Hingga 24 universe, desain ramping, proteksi fault elektrikal. Ideal untuk instalasi komersial profesional.", href: "https://www.advateklighting.com/products/collections/professional-pixel-control/pixlite-a4s-mk3" },
-    { model: "PixLite® E16-S Mk3", slug: "e16s-mk3", desc: "Controller 16-output paling cost-efficient. Mendukung hingga 96 universe — sempurna untuk proyek skala besar.", href: "https://www.advateklighting.com/products/collections/professional-pixel-control/pixlite-e16s-mk3" },
-    { model: "PixLite® T8-S Mk3", slug: "t8s-mk3", desc: "Transmisi data jarak jauh 300m. Solusi tinggi-dampak untuk instalasi terdistribusi dan outdoor.", href: "https://www.advateklighting.com/products/collections/professional-pixel-control/pixlite-t8s-mk3" },
+    { model: "PixLite® A4-S Mk3", slug: "a4s-mk3", desc: "Hingga 24 universe, desain ramping, proteksi fault elektrikal. Ideal untuk instalasi komersial profesional.", href: "https://www.advateklighting.com/products/a4-s-mk3" },
+    { model: "PixLite® E16-S Mk3", slug: "e16s-mk3", desc: "Controller 16-output paling cost-efficient. Mendukung hingga 96 universe — sempurna untuk proyek skala besar.", href: "https://www.advateklighting.com/products/e16-s-mk3" },
+    { model: "PixLite® T8-S Mk3", slug: "t8s-mk3", desc: "Transmisi data jarak jauh 300m. Solusi tinggi-dampak untuk instalasi terdistribusi dan outdoor.", href: "https://www.advateklighting.com/products/t8-s-mk3" },
   ];
 
   return (
@@ -1217,7 +1217,7 @@ function AdvatekSection() {
                 >
                   <div className="relative w-full h-36 bg-[#0a0a0a] flex items-center justify-center border-b border-white/6">
                     <div className="relative w-full h-full">
-                      <Image src={`/images/advatek/${p.slug}.jpg`} alt={p.model} fill className="object-contain p-4" onError={undefined} />
+                      <Image src={`/images/advatek/${p.slug}.webp`} alt={p.model} fill className="object-contain p-4" />
                     </div>
                   </div>
                   <div className="p-5">

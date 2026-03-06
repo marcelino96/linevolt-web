@@ -401,7 +401,7 @@ function VideoShowcase() {
 
 function WhyUs() {
     return (
-        <section id="why-us" className="relative py-32 overflow-hidden">
+        <section id="why-us" className="relative pt-32 pb-12 overflow-hidden">
             <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 70% 60% at 50% 50%, rgba(249,115,22,0.04) 0%, transparent 70%)" }} />
             <AnimatedSection className="max-w-7xl mx-auto px-6">
                 <div className="text-center mb-16">
@@ -596,9 +596,9 @@ function AdvatekSection() {
     const ref = useRef<HTMLDivElement>(null);
     const inView = useInView(ref, { once: true, margin: "-80px" });
     const products = [
-        { model: "PixLite® A4-S Mk3", slug: "a4s-mk3", desc: "Up to 24 universes, sleek design, electrical fault protection. Ideal for professional commercial installs.", href: "https://www.advateklighting.com/products/collections/professional-pixel-control/pixlite-a4s-mk3" },
-        { model: "PixLite® E16-S Mk3", slug: "e16s-mk3", desc: "Most cost-efficient 16-output controller. Drives up to 96 universes — perfect for large-scale projects.", href: "https://www.advateklighting.com/products/collections/professional-pixel-control/pixlite-e16s-mk3" },
-        { model: "PixLite® T8-S Mk3", slug: "t8s-mk3", desc: "Long-range 300m data transmission. High-impact solution for distributed and outdoor installations.", href: "https://www.advateklighting.com/products/collections/professional-pixel-control/pixlite-t8s-mk3" },
+        { model: "PixLite® A4-S Mk3", slug: "a4s-mk3", desc: "Up to 24 universes, sleek design, electrical fault protection. Ideal for professional commercial installs.", href: "https://www.advateklighting.com/products/a4-s-mk3" },
+        { model: "PixLite® E16-S Mk3", slug: "e16s-mk3", desc: "Most cost-efficient 16-output controller. Drives up to 96 universes — perfect for large-scale projects.", href: "https://www.advateklighting.com/products/e16-s-mk3" },
+        { model: "PixLite® T8-S Mk3", slug: "t8s-mk3", desc: "Long-range 300m data transmission. High-impact solution for distributed and outdoor installations.", href: "https://www.advateklighting.com/products/t8-s-mk3" },
     ];
     return (
         <section ref={ref} className="relative py-28 overflow-hidden">
@@ -636,7 +636,7 @@ function AdvatekSection() {
                                 <motion.div key={i} initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay: 0.2 + i * 0.1 }} className="rounded-2xl overflow-hidden border border-white/6 bg-white/3 hover:border-orange-400/25 hover:bg-orange-400/5 transition-all duration-300">
                                     <div className="relative w-full h-36 bg-[#0a0a0a] flex items-center justify-center border-b border-white/6">
                                         <div className="relative w-full h-full">
-                                            <Image src={`/images/advatek/${p.slug}.jpg`} alt={p.model} fill className="object-contain p-4" />
+                                            <Image src={`/images/advatek/${p.slug}.webp`} alt={p.model} fill className="object-contain p-4" />
                                         </div>
                                     </div>
                                     <div className="p-5">
