@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="id">
+<head><meta charset="utf-8"><title>Netlify Forms Detection</title></head>
+<body>
+  <!-- Static form for Netlify build-time detection (Indonesian page) -->
+  <form name="contact" netlify netlify-honeypot="bot-field" hidden>
+    <input type="hidden" name="form-name" value="contact" />
+    <input name="bot-field" />
+    <input type="text" name="name" />
+    <input type="text" name="venue" />
+    <input type="text" name="location" />
+    <textarea name="message"></textarea>
+  </form>
+
+  <!-- Static form for Netlify build-time detection (English page) -->
+  <form name="contact-en" netlify netlify-honeypot="bot-field" hidden>
+    <input type="hidden" name="form-name" value="contact-en" />
+    <input name="bot-field" />
+    <input type="text" name="name" />
+    <input type="text" name="venue" />
+    <input type="text" name="location" />
+    <textarea name="message"></textarea>
+  </form>
+</body>
+</html>

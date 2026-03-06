@@ -1,0 +1,127 @@
+[
+    {
+        "id": "yes-chef",
+        "name": "Yes Chef",
+        "location": "SCBD, Jakarta",
+        "year": "2025",
+        "tag": "Restaurant Lighting",
+        "tagEN": "Restaurant Lighting",
+        "category": "installation",
+        "image": "/images/portfolio/yes-chef.jpg",
+        "images": [
+            "/images/portfolio/yes-chef.jpg"
+        ],
+        "gradient": "from-amber-900/80 to-orange-900/60",
+        "color": "#F97316"
+    },
+    {
+        "id": "tembak-langit",
+        "name": "Tembak Langit",
+        "location": "Batam",
+        "year": "2025",
+        "tag": "Stage & Venue Lighting",
+        "tagEN": "Stage & Venue Lighting",
+        "category": "installation",
+        "image": "/images/portfolio/tembak-langit.jpg",
+        "images": [
+            "/images/portfolio/tembak-langit.jpg"
+        ],
+        "gradient": "from-blue-900/80 to-indigo-900/60",
+        "color": "#60a5fa"
+    },
+    {
+        "id": "h-bar",
+        "name": "H Bar",
+        "location": "SCBD, Jakarta",
+        "year": "2025",
+        "tag": "Bar & Club Lighting",
+        "tagEN": "Bar & Club Lighting",
+        "category": "installation",
+        "image": "/images/portfolio/h-bar.jpg",
+        "images": [
+            "/images/portfolio/h-bar.jpg"
+        ],
+        "gradient": "from-purple-900/80 to-pink-900/60",
+        "color": "#a78bfa"
+    },
+    {
+        "id": "helens-nightmart",
+        "name": "Helen's Night Mart",
+        "location": "Malang",
+        "year": "2025",
+        "tag": "Retail Lighting",
+        "tagEN": "Retail Lighting",
+        "category": "installation",
+        "image": "/images/portfolio/helens-nightmart.jpg",
+        "images": [
+            "/images/portfolio/helens-nightmart.jpg"
+        ],
+        "gradient": "from-emerald-900/80 to-teal-900/60",
+        "color": "#34d399"
+    },
+    {
+        "id": "lounge-x",
+        "name": "Lounge X",
+        "location": "Jakarta Selatan",
+        "year": "2025",
+        "tag": "Lounge Lighting",
+        "tagEN": "Lounge Lighting",
+        "category": "installation",
+        "image": "",
+        "images": [],
+        "gradient": "from-rose-900/80 to-red-900/60",
+        "color": "#f43f5e"
+    },
+    {
+        "id": "karaoke-dynasty",
+        "name": "Karaoke Dynasty",
+        "location": "Jakarta Utara",
+        "year": "2025",
+        "tag": "KTV Lighting",
+        "tagEN": "KTV Lighting",
+        "category": "installation",
+        "image": "",
+        "images": [],
+        "gradient": "from-violet-900/80 to-purple-900/60",
+        "color": "#8b5cf6"
+    },
+    {
+        "id": "event-rave-2025",
+        "name": "Rave Jakarta 2025",
+        "location": "Jakarta Convention Center",
+        "year": "2025",
+        "tag": "Event Lighting",
+        "tagEN": "Event Lighting",
+        "category": "event",
+        "image": "",
+        "images": [],
+        "gradient": "from-cyan-900/80 to-blue-900/60",
+        "color": "#22d3ee"
+    },
+    {
+        "id": "event-corporate-gala",
+        "name": "Corporate Gala Night",
+        "location": "Ritz-Carlton, Jakarta",
+        "year": "2025",
+        "tag": "Corporate Event",
+        "tagEN": "Corporate Event",
+        "category": "event",
+        "image": "",
+        "images": [],
+        "gradient": "from-yellow-900/80 to-amber-900/60",
+        "color": "#fbbf24"
+    },
+    {
+        "id": "event-concert-batam",
+        "name": "Live Concert Batam",
+        "location": "Batam",
+        "year": "2025",
+        "tag": "Concert Lighting",
+        "tagEN": "Concert Lighting",
+        "category": "event",
+        "image": "",
+        "images": [],
+        "gradient": "from-orange-900/80 to-red-900/60",
+        "color": "#fb923c"
+    }
+]

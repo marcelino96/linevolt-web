@@ -1,0 +1,72 @@
+{
+    "slug": "panduan-lengkap-instalasi-videotron-permanen",
+    "title": "Panduan Lengkap Instalasi Videotron Permanen: Dari Desain hingga Commissioning",
+    "excerpt": "Instalasi videotron permanen melibatkan lebih dari sekadar pasang panel LED — ada perhitungan struktur, sistem kelistrikan, manajemen panas, dan proses commissioning yang kompleks. Panduan komprehensif ini membahas semua aspeknya.",
+    "coverImage": "",
+    "tags": ["Videotron", "Tips Instalasi"],
+    "publishedAt": "2025-01-20",
+    "readTime": "9 menit",
+    "author": "Tim Linevolt",
+    "content": [
+        {
+            "type": "paragraph",
+            "text": "Videotron permanen adalah investasi signifikan yang, jika dipasang dengan benar, akan berfungsi optimal selama 8-12 tahun. Sebaliknya, instalasi yang buruk bisa mengakibatkan kegagalan dalam hitungan bulan dan biaya remediasi yang jauh melebihi biaya instalasi awal. Panduan ini menjelaskan setiap tahap secara detail."
+        },
+        {
+            "type": "heading",
+            "text": "Fase 1: Site Survey dan Perancangan Teknis"
+        },
+        {
+            "type": "paragraph",
+            "text": "Sebelum satu panel pun dibeli, site survey menyeluruh adalah kewajiban. Yang harus dievaluasi: kondisi struktur dinding atau rangka yang akan menopang videotron (beban per m² panel LED lengkap bisa mencapai 25-40 kg), akses listrik (berapa ampere tersedia, jarak ke panel distribusi), kondisi lingkungan (indoor vs outdoor, exposure matahari langsung, potensi genangan air), dan regulasi lokal terkait signage."
+        },
+        {
+            "type": "heading",
+            "text": "Fase 2: Pemilihan Pixel Pitch yang Tepat"
+        },
+        {
+            "type": "paragraph",
+            "text": "Pixel pitch menentukan resolusi dan jarak pandang minimum. Formula praktis: jarak pandang minimum (meter) = pixel pitch (mm) x 0.8. Jadi P3 cocok untuk jarak minimal 2.4 meter, P8 untuk 6.4 meter, P10 untuk 8 meter. Untuk videotron di lobby hotel atau ruang meeting indoor (pengunjung berjarak 3-8 meter), P3 atau P4 adalah sweet spot. Untuk fasad outdoor yang dilihat dari jalan (jarak 10+ meter), P8-P10 sudah cukup resolusi dengan biaya lebih efisien."
+        },
+        {
+            "type": "heading",
+            "text": "Fase 3: Perancangan Struktur Mounting"
+        },
+        {
+            "type": "paragraph",
+            "text": "Struktur mounting adalah komponen yang paling sering diabaikan. Besi hollow 40x40mm atau 50x50mm dengan ketebalan 2mm adalah minimum untuk videotron hingga 10m². Untuk ukuran lebih besar atau lokasi outdoor dengan potensi angin kencang, diperlukan kalkulasi struktur oleh insinyur sipil. Struktur harus di-galvanis atau dicat anti-karat, terutama untuk outdoor. Clearance minimal 10cm antara panel LED dan dinding belakang untuk sirkulasi udara dan maintenance access."
+        },
+        {
+            "type": "heading",
+            "text": "Fase 4: Sistem Kelistrikan dan Power Distribution"
+        },
+        {
+            "type": "paragraph",
+            "text": "Setiap kabinet LED berisi power supply internal yang membutuhkan input AC 220V. Untuk videotron 10m² dengan sekitar 10 kabinet, total konsumsi bisa mencapai 3-5kW saat brightness penuh. Wajib menggunakan dedicated circuit dengan MCB (Miniature Circuit Breaker) yang sesuai — jangan gabungkan dengan sirkuit lain. Kabel yang digunakan harus sesuai standar instalasi dengan ukuran yang tepat berdasarkan panjang run dan ampere. Grounding yang benar sangat penting untuk perlindungan terhadap petir pada instalasi outdoor."
+        },
+        {
+            "type": "heading",
+            "text": "Fase 5: Instalasi Panel dan Kalibrasi Warna"
+        },
+        {
+            "type": "paragraph",
+            "text": "Pemasangan panel LED dilakukan setelah struktur dan wiring selesai dan diverifikasi. Panel dipasang modul per modul mengikuti urutan yang sudah dipetakan. Setelah seluruh panel terpasang, proses kalibrasi dimulai: setiap modul dikalibrasi terhadap standar referensi menggunakan colorimeter untuk memastikan konsistensi warna di seluruh display. Panel yang tidak dikalibrasi akan menunjukkan perbedaan warna yang jelas antar area — tanda instalasi yang tidak profesional."
+        },
+        {
+            "type": "heading",
+            "text": "Fase 6: Setup Controller dan Software"
+        },
+        {
+            "type": "paragraph",
+            "text": "Sending card (controller utama) dikonfigurasi dengan resolusi dan layout yang sesuai. PC atau media player yang mengirim konten ke sending card harus memenuhi spesifikasi minimum: setidaknya Core i5 generasi terbaru dengan dedicated GPU untuk playback video 4K yang smooth. Software manajemen konten (seperti Nova Star V-Can, LedArt, atau solusi custom) diinstall dan ditest untuk memastikan scheduling, switching preset, dan playback berfungsi normal."
+        },
+        {
+            "type": "heading",
+            "text": "Fase 7: Commissioning dan Serah Terima"
+        },
+        {
+            "type": "paragraph",
+            "text": "Commissioning adalah fase verifikasi menyeluruh: test setiap piksel untuk dead pixel, test thermal saat beroperasi 4+ jam continuous, verifikasi brightness di berbagai tingkat, test semua fungsi controller. Serah terima meliputi training operator untuk penggunaan software content management, dokumentasi lengkap wiring dan konfigurasi, dan jadwal preventive maintenance. Jangan terima instalasi tanpa dokumentasi teknis — ini penting untuk maintenance di masa depan."
+        }
+    ]
+}
