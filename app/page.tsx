@@ -654,16 +654,33 @@ function PortfolioCard({ project, i }: { project: PortfolioProject; i: number })
 
 /* ─── Portfolio ─────────────────────────────────────────────────────────── */
 
-const PORTFOLIO_TABS = [
+const PORTFOLIO_MAIN_TABS = [
   { key: "all", label: "Semua" },
-  { key: "installation", label: "Instalasi" },
+  { key: "led", label: "Led Strip Addressable" },
+  { key: "videotron", label: "Videotron" },
+];
+
+const PORTFOLIO_LED_SUBTABS = [
+  { key: "all-led", label: "Semua" },
+  { key: "installation", label: "Installation" },
   { key: "event", label: "Event" },
 ];
 
 function Portfolio() {
   const [activeTab, setActiveTab] = useState("all");
+  const [activeLedSub, setActiveLedSub] = useState("all-led");
   const allProjects = PORTFOLIO as PortfolioProject[];
-  const filtered = activeTab === "all" ? allProjects : allProjects.filter(p => p.category === activeTab);
+
+  const filtered = (() => {
+    if (activeTab === "videotron") return allProjects.filter(p => p.category === "videotron");
+    if (activeTab === "led") {
+      const ledProjects = allProjects.filter(p => p.category === "installation" || p.category === "event");
+      if (activeLedSub === "installation") return ledProjects.filter(p => p.category === "installation");
+      if (activeLedSub === "event") return ledProjects.filter(p => p.category === "event");
+      return ledProjects;
+    }
+    return allProjects;
+  })();
 
   return (
     <section id="portfolio" className="relative py-32 overflow-hidden">
@@ -684,11 +701,15 @@ function Portfolio() {
           </motion.p>
         </div>
 
-        <motion.div variants={fadeUp} className="flex items-center justify-center gap-2 mb-10">
-          {PORTFOLIO_TABS.map(tab => (
+        {/* Main tabs */}
+        <motion.div variants={fadeUp} className="flex items-center justify-center gap-2 mb-3">
+          {PORTFOLIO_MAIN_TABS.map(tab => (
             <button
               key={tab.key}
-              onClick={() => setActiveTab(tab.key)}
+              onClick={() => {
+                setActiveTab(tab.key);
+                setActiveLedSub("all-led");
+              }}
               className={`px-5 py-2 rounded-full text-sm font-semibold transition-all duration-300 ${
                 activeTab === tab.key
                   ? "bg-orange-500 text-white shadow-[0_0_20px_rgba(249,115,22,0.4)]"
@@ -696,6 +717,28 @@ function Portfolio() {
               }`}
             >
               {tab.label}
+            </button>
+          ))}
+        </motion.div>
+
+        {/* LED sub-tabs — visible only when "led" is active */}
+        <motion.div
+          variants={fadeUp}
+          className={`flex items-center justify-center gap-2 mb-10 transition-all duration-300 ${
+            activeTab === "led" ? "opacity-100 h-auto mt-3" : "opacity-0 h-0 overflow-hidden pointer-events-none"
+          }`}
+        >
+          {PORTFOLIO_LED_SUBTABS.map(sub => (
+            <button
+              key={sub.key}
+              onClick={() => setActiveLedSub(sub.key)}
+              className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-300 ${
+                activeLedSub === sub.key
+                  ? "bg-orange-400/20 border border-orange-400/60 text-orange-400"
+                  : "border border-white/10 text-gray-500 hover:border-white/25 hover:text-gray-300"
+              }`}
+            >
+              {sub.label}
             </button>
           ))}
         </motion.div>

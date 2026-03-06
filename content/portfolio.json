@@ -123,5 +123,31 @@
         "images": [],
         "gradient": "from-orange-900/80 to-red-900/60",
         "color": "#fb923c"
+    },
+    {
+        "id": "videotron-mall-serpong",
+        "name": "Videotron Mall Serpong",
+        "location": "Tangerang Selatan",
+        "year": "2025",
+        "tag": "Videotron Indoor",
+        "tagEN": "Indoor Videotron",
+        "category": "videotron",
+        "image": "",
+        "images": [],
+        "gradient": "from-sky-900/80 to-blue-900/60",
+        "color": "#38bdf8"
+    },
+    {
+        "id": "videotron-gedung-kantor-cbd",
+        "name": "Videotron Gedung Perkantoran",
+        "location": "CBD Jakarta",
+        "year": "2025",
+        "tag": "Videotron Outdoor",
+        "tagEN": "Outdoor Videotron",
+        "category": "videotron",
+        "image": "",
+        "images": [],
+        "gradient": "from-teal-900/80 to-cyan-900/60",
+        "color": "#2dd4bf"
     }
 ]
