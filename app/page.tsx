@@ -9,7 +9,7 @@ import { Services } from "./components/Services";
 import { AdvatekSection } from "./components/AdvatekSection";
 import { Portfolio } from "./components/Portfolio";
 import { WhyUs } from "./components/WhyUs";
-import { BlogPreview } from "./components/BlogPreview";
+// import { BlogPreview } from "./components/BlogPreview";
 import { CTABanner } from "./components/CTABanner";
 import { Contact } from "./components/Contact";
 import { Footer } from "./components/Footer";
@@ -27,7 +27,7 @@ export default function Page() {
       <AdvatekSection />
       <Portfolio />
       <WhyUs />
-      <BlogPreview />
+      {/* <BlogPreview /> */}
       <CTABanner />
       <Contact />
       <Footer />

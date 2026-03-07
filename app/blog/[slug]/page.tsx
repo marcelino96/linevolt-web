@@ -4,11 +4,16 @@ import fs from "fs";
 import path from "path";
 import { notFound } from "next/navigation";
 
+type ContentBlock = {
+    type: string;
+    text: string;
+};
+
 type Post = {
     slug: string;
     title: string;
     excerpt: string;
-    content: string;
+    content: string | ContentBlock[];
     coverImage?: string;
     tags: string[];
     publishedAt: string;
@@ -66,6 +71,19 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 function formatDate(dateStr: string) {
     return new Date(dateStr).toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" });
+}
+
+// Convert content array format to markdown string
+function convertContentToMarkdown(content: string | ContentBlock[]): string {
+    if (typeof content === "string") return content;
+    
+    return content
+        .map((block: ContentBlock) => {
+            if (block.type === "heading") return `## ${block.text}`;
+            if (block.type === "paragraph") return block.text;
+            return block.text;
+        })
+        .join("\n\n");
 }
 
 // Simple markdown-to-HTML renderer for content
@@ -178,7 +196,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                 {/* Content */}
                 <div
                     className="prose-custom"
-                    dangerouslySetInnerHTML={{ __html: renderContent(post.content) }}
+                    dangerouslySetInnerHTML={{ __html: renderContent(convertContentToMarkdown(post.content)) }}
                 />
 
                 {/* CTA */}
