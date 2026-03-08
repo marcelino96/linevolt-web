@@ -1,17 +1,22 @@
 import { setRequestLocale } from "next-intl/server";
+import dynamic from "next/dynamic";
+
+// ✅ Above-fold: load immediately (critical for LCP)
 import { Navbar } from "../components/Navbar";
-import { LangSwitcher } from "../components/LangSwitcher";
 import { Hero } from "../components/Hero";
-import { VideoShowcase } from "../components/VideoShowcase";
-import { About } from "../components/About";
-import { Services } from "../components/Services";
-import { AdvatekSection } from "../components/AdvatekSection";
-import { Portfolio } from "../components/Portfolio";
-import { WhyUs } from "../components/WhyUs";
-import { CTABanner } from "../components/CTABanner";
-import { Contact } from "../components/Contact";
-import { Footer } from "../components/Footer";
-import { WAButton } from "../components/WAButton";
+
+// ✅ Below-fold: code-split to reduce initial bundle (ssr:true allowed in Server Components)
+const LangSwitcher = dynamic(() => import("../components/LangSwitcher").then(m => ({ default: m.LangSwitcher })));
+const VideoShowcase = dynamic(() => import("../components/VideoShowcase").then(m => ({ default: m.VideoShowcase })));
+const About = dynamic(() => import("../components/About").then(m => ({ default: m.About })));
+const Services = dynamic(() => import("../components/Services").then(m => ({ default: m.Services })));
+const AdvatekSection = dynamic(() => import("../components/AdvatekSection").then(m => ({ default: m.AdvatekSection })));
+const Portfolio = dynamic(() => import("../components/Portfolio").then(m => ({ default: m.Portfolio })));
+const WhyUs = dynamic(() => import("../components/WhyUs").then(m => ({ default: m.WhyUs })));
+const CTABanner = dynamic(() => import("../components/CTABanner").then(m => ({ default: m.CTABanner })));
+const Contact = dynamic(() => import("../components/Contact").then(m => ({ default: m.Contact })));
+const Footer = dynamic(() => import("../components/Footer").then(m => ({ default: m.Footer })));
+const WAButton = dynamic(() => import("../components/WAButton").then(m => ({ default: m.WAButton })));
 
 export default async function Page({
   params,

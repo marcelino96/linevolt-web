@@ -1,13 +1,19 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "../globals.css";
-import Script from "next/script";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { notFound } from "next/navigation";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+// ✅ font display:swap prevents render-blocking FOIT
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+  preload: true,
+  fallback: ["system-ui", "arial"],
+});
 const BASE_URL = "https://linevolt.id";
 
 export function generateStaticParams() {
@@ -88,7 +94,15 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} className="scroll-smooth">
       <head>
-        <Script id="json-ld-business" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }} />
+        {/* ✅ Preconnect to speed up font & external resource loading */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <meta name="theme-color" content="#050505" />
+        {/* ✅ Inline script instead of next/script — works in <head> without hydration */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
+        />
       </head>
       <body className={`${inter.variable} font-sans antialiased bg-[#050505] text-white`}>
         <NextIntlClientProvider messages={messages}>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
 import { ChevronRight } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -11,11 +11,32 @@ export function VideoShowcase() {
   const t = useTranslations("VideoShowcase");
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
+  // ✅ Only mount video element once section is visible — prevents blocking main thread
+  const [videoReady, setVideoReady] = useState(false);
+
+  useEffect(() => {
+    if (inView) setVideoReady(true);
+  }, [inView]);
 
   return (
     <section ref={ref} className="relative py-0 overflow-hidden" style={{ minHeight: "80vh" }}>
       <div className="absolute inset-0">
-        <video src={BG_VIDEO_SRC} autoPlay muted loop playsInline preload="auto" className="absolute inset-0 w-full h-full object-cover" />
+        {/* ✅ Dark placeholder shown until video loads */}
+        {!videoReady && <div className="absolute inset-0 bg-[#0a0a0a]" />}
+        {videoReady && (
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="none"
+            className="absolute inset-0 w-full h-full object-cover"
+          >
+            {/* ✅ WebM first — smaller file, faster load */}
+            <source src={BG_VIDEO_SRC.replace(".mp4", ".webm")} type="video/webm" />
+            <source src={BG_VIDEO_SRC} type="video/mp4" />
+          </video>
+        )}
         <div className="absolute inset-0" style={{ background: "rgba(5,5,5,0.38)" }} />
         <div
           className="absolute inset-0 pointer-events-none"
