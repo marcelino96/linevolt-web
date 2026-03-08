@@ -4,24 +4,25 @@ import { useRef } from "react";
 import Image from "next/image";
 import { motion, useInView } from "framer-motion";
 import { Award, ExternalLink, CheckCircle2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 export function AdvatekSection() {
+  const t = useTranslations("Advatek");
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
+
   const products = [
-    { model: "PixLite® A4-S Mk3", slug: "a4s-mk3", desc: "Hingga 24 universe, desain ramping, proteksi fault elektrikal. Ideal untuk instalasi komersial profesional.", href: "https://www.advateklighting.com/products/a4-s-mk3" },
-    { model: "PixLite® E16-S Mk3", slug: "e16s-mk3", desc: "Controller 16-output paling cost-efficient. Mendukung hingga 96 universe — sempurna untuk proyek skala besar.", href: "https://www.advateklighting.com/products/e16-s-mk3" },
-    { model: "PixLite® T8-S Mk3", slug: "t8s-mk3", desc: "Transmisi data jarak jauh 300m. Solusi tinggi-dampak untuk instalasi terdistribusi dan outdoor.", href: "https://www.advateklighting.com/products/t8-s-mk3" },
+    { model: "PixLite® A4-S Mk3", slug: "a4s-mk3", desc: t("a4sDesc"), href: "https://www.advateklighting.com/products/a4-s-mk3" },
+    { model: "PixLite® E16-S Mk3", slug: "e16s-mk3", desc: t("e16sDesc"), href: "https://www.advateklighting.com/products/e16-s-mk3" },
+    { model: "PixLite® T8-S Mk3", slug: "t8s-mk3", desc: t("t8sDesc"), href: "https://www.advateklighting.com/products/t8-s-mk3" },
   ];
 
   return (
     <section ref={ref} className="relative py-28 overflow-hidden">
-      {/* Subtle BG glow */}
       <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 80% 50% at 50% 60%, rgba(249,115,22,0.06) 0%, transparent 70%)" }} />
       <div className="divider-gradient mb-20 mx-8" />
 
       <div className="max-w-7xl mx-auto px-6">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -30,30 +31,28 @@ export function AdvatekSection() {
         >
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-orange-400/40 bg-orange-400/8 text-orange-400 text-xs font-semibold tracking-widest uppercase mb-5">
             <Award size={12} />
-            Official Dealer · Australia
+            {t("dealerBadge")}
           </div>
           <h2 className="text-4xl md:text-5xl font-black leading-tight mb-4">
-            Ditenagai <span className="text-gradient">Teknologi Terbaik</span>
+            {t("headingPrefix")} <span className="text-gradient">{t("headingHighlight")}</span>
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto text-lg">
-            Linevolt adalah <strong className="text-white">Authorized Dealer resmi Advatek Lighting</strong> di Indonesia.
-            Setiap instalasi LED pixel kami menggunakan controller <strong className="text-orange-400">PixLite® Mk3</strong> — standar global untuk instalasi pencahayaan profesional yang tidak kompromi soal keandalan.
+            {t("descriptionPrefix")}{" "}
+            <strong className="text-white">{t("descriptionBrand")}</strong>{" "}
+            {t("descriptionMiddle")}{" "}
+            <strong className="text-orange-400">{t("descriptionProduct")}</strong>{" "}
+            {t("descriptionSuffix")}
           </p>
         </motion.div>
 
-        {/* Main card */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.1 }}
           className="relative rounded-3xl overflow-hidden border border-orange-400/15 mb-8"
-          style={{
-            background: "linear-gradient(135deg, rgba(249,115,22,0.08) 0%, rgba(5,5,5,0.95) 40%, rgba(5,5,5,0.98) 100%)",
-          }}
+          style={{ background: "linear-gradient(135deg, rgba(249,115,22,0.08) 0%, rgba(5,5,5,0.95) 40%, rgba(5,5,5,0.98) 100%)" }}
         >
-          {/* Grid pattern */}
           <div className="absolute inset-0 grid-pattern opacity-20" />
-          {/* Top orange glow */}
           <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-orange-400/50 to-transparent" />
 
           <div className="relative z-10 p-8 md:p-12">
@@ -74,11 +73,10 @@ export function AdvatekSection() {
                 rel="noopener noreferrer"
                 className="group inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-orange-400/40 text-orange-400 text-sm font-semibold hover:bg-orange-400/10 transition-all duration-300 shrink-0"
               >
-                Lihat Produk <ExternalLink size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                {t("viewProducts")} <ExternalLink size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               </a>
             </div>
 
-            {/* Product cards */}
             <div className="grid md:grid-cols-3 gap-4">
               {products.map((p, i) => (
                 <motion.div
@@ -97,14 +95,13 @@ export function AdvatekSection() {
                     <div className="text-orange-400 font-bold text-sm mb-2">{p.model}</div>
                     <p className="text-gray-400 text-sm leading-relaxed mb-3">{p.desc}</p>
                     <a href={p.href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-xs text-orange-400/70 hover:text-orange-400 transition-colors">
-                      Lihat Detail <ExternalLink size={10} />
+                      {t("viewDetail")} <ExternalLink size={10} />
                     </a>
                   </div>
                 </motion.div>
               ))}
             </div>
 
-            {/* Badge row */}
             <div className="mt-8 flex flex-wrap gap-3">
               {["Fault Protection", "Long Range 300m", "96 Universes Max", "DMX Compatible", "Global Benchmark", "Australian Quality"].map((badge, i) => (
                 <span key={i} className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-white/10 text-gray-400 text-xs">
@@ -116,14 +113,13 @@ export function AdvatekSection() {
           </div>
         </motion.div>
 
-        {/* Bottom copy */}
         <motion.p
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ duration: 0.6, delay: 0.4 }}
           className="text-center text-gray-500 text-sm"
         >
-          Sebagai dealer resmi, kami menjamin keaslian produk, garansi penuh, dan dukungan teknis langsung.
+          {t("footer")}
         </motion.p>
       </div>
     </section>

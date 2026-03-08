@@ -4,19 +4,24 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Phone, Menu, X } from "lucide-react";
-
-const NAV_LINKS = [
-  { label: "Tentang Kami", href: "#about" },
-  { label: "Layanan", href: "#services" },
-  { label: "Portofolio", href: "#portfolio" },
-  { label: "Mengapa Kami", href: "#why-us" },
-  { label: "Blog", href: "/blog" },
-  { label: "Kontak", href: "#contact" },
-];
+import { useTranslations, useLocale } from "next-intl";
 
 export function Navbar() {
+  const t = useTranslations("Navbar");
+  const locale = useLocale();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const showBlog = locale === "id";
+
+  const NAV_LINKS = [
+    { label: t("about"), href: "#about" },
+    { label: t("services"), href: "#services" },
+    { label: t("portfolio"), href: "#portfolio" },
+    { label: t("whyUs"), href: "#why-us" },
+    ...(showBlog ? [{ label: t("blog"), href: "/blog" }] : []),
+    { label: t("contact"), href: "#contact" },
+  ];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -72,7 +77,7 @@ export function Navbar() {
 
         {/* CTA */}
         <motion.a
-          href="https://wa.me/62817771343?text=Halo%20Linevolt%2C%20saya%20ingin%20bertanya%20tentang%20proyek%20lighting"
+          href={`https://wa.me/62817771343?text=${t("waMessage")}`}
           target="_blank"
           rel="noopener noreferrer"
           initial={{ opacity: 0, x: 20 }}
@@ -81,7 +86,7 @@ export function Navbar() {
           className="hidden md:flex items-center gap-2 px-5 py-2.5 bg-orange-500 text-white text-sm font-bold rounded-full hover:bg-orange-400 hover:shadow-[0_0_24px_rgba(249,115,22,0.5)] transition-all duration-300"
         >
           <Phone size={14} />
-          Hubungi Kami
+          {t("cta")}
         </motion.a>
 
         {/* Mobile Menu Toggle */}
@@ -117,7 +122,7 @@ export function Navbar() {
               </motion.a>
             ))}
             <motion.a
-              href="https://wa.me/62817771343?text=Halo%20Linevolt%2C%20saya%20ingin%20bertanya%20tentang%20proyek%20lighting"
+              href={`https://wa.me/62817771343?text=${t("waMessage")}`}
               target="_blank"
               rel="noopener noreferrer"
               initial={{ opacity: 0 }}
@@ -126,7 +131,7 @@ export function Navbar() {
               className="mt-4 flex items-center justify-center gap-2 px-5 py-3 bg-orange-500 text-white font-bold rounded-full text-sm"
             >
               <Phone size={14} />
-              Hubungi Kami
+              {t("cta")}
             </motion.a>
           </motion.div>
         )}

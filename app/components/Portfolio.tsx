@@ -5,31 +5,15 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { MapPin, ArrowUpRight } from "lucide-react";
 import { fadeUp, stagger, scaleIn, AnimatedSection, SectionLabel } from "./shared";
+import { useTranslations } from "next-intl";
 import portfolioData from "../../content/portfolio.json";
-
-/* ─── Types ─────────────────────────────────────────────────────────────── */
 
 type PortfolioProject = {
   id?: string; name: string; location: string; year: string;
   tag: string; category?: string; image?: string; images?: string[]; gradient: string; color: string;
 };
 
-/* ─── Portfolio data loaded from content/portfolio.json — edit that file to update portfolio */
 const PORTFOLIO = portfolioData;
-
-const PORTFOLIO_MAIN_TABS = [
-  { key: "all", label: "Semua" },
-  { key: "led", label: "Led Strip Addressable" },
-  { key: "videotron", label: "Videotron" },
-];
-
-const PORTFOLIO_LED_SUBTABS = [
-  { key: "all-led", label: "Semua" },
-  { key: "installation", label: "Installation" },
-  { key: "event", label: "Event" },
-];
-
-/* ─── PortfolioCard (with auto-slideshow) ───────────────────────────────── */
 
 function PortfolioCard({ project, i }: { project: PortfolioProject; i: number }) {
   const images: string[] = project.images?.length
@@ -102,12 +86,23 @@ function PortfolioCard({ project, i }: { project: PortfolioProject; i: number })
   );
 }
 
-/* ─── Portfolio ─────────────────────────────────────────────────────────── */
-
 export function Portfolio() {
+  const t = useTranslations("Portfolio");
   const [activeTab, setActiveTab] = useState("all");
   const [activeLedSub, setActiveLedSub] = useState("all-led");
   const allProjects = PORTFOLIO as PortfolioProject[];
+
+  const PORTFOLIO_MAIN_TABS = [
+    { key: "all", label: t("tabAll") },
+    { key: "led", label: t("tabLed") },
+    { key: "videotron", label: t("tabVideotron") },
+  ];
+
+  const PORTFOLIO_LED_SUBTABS = [
+    { key: "all-led", label: t("subtabAll") },
+    { key: "installation", label: t("subtabInstallation") },
+    { key: "event", label: t("subtabEvent") },
+  ];
 
   const filtered = (() => {
     if (activeTab === "videotron") return allProjects.filter(p => p.category === "videotron");
@@ -125,29 +120,22 @@ export function Portfolio() {
       <div className="divider-gradient mb-20 mx-8" />
       <AnimatedSection className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-12">
-          <SectionLabel>Portofolio</SectionLabel>
-          <motion.h2
-            variants={fadeUp}
-            className="text-4xl md:text-5xl font-black leading-tight"
-          >
-            Proyek{" "}
-            <span className="text-gradient">Premium</span> Kami
+          <SectionLabel>{t("label")}</SectionLabel>
+          <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-black leading-tight">
+            {t("headingPrefix")}{" "}
+            <span className="text-gradient">{t("headingHighlight")}</span>{" "}
+            {t("headingSuffix")}
           </motion.h2>
           <motion.p variants={fadeUp} className="text-gray-400 mt-4 max-w-lg mx-auto">
-            Setiap proyek adalah kanvas baru. Kami menghadirkan solusi pencahayaan yang
-            bukan sekedar indah — tapi juga berbicara tentang karakter space tersebut.
+            {t("subheading")}
           </motion.p>
         </div>
 
-        {/* Main tabs */}
         <motion.div variants={fadeUp} className="flex items-center justify-center gap-2 mb-3">
           {PORTFOLIO_MAIN_TABS.map(tab => (
             <button
               key={tab.key}
-              onClick={() => {
-                setActiveTab(tab.key);
-                setActiveLedSub("all-led");
-              }}
+              onClick={() => { setActiveTab(tab.key); setActiveLedSub("all-led"); }}
               className={`px-5 py-2 rounded-full text-sm font-semibold transition-all duration-300 ${
                 activeTab === tab.key
                   ? "bg-orange-500 text-white shadow-[0_0_20px_rgba(249,115,22,0.4)]"
@@ -159,7 +147,6 @@ export function Portfolio() {
           ))}
         </motion.div>
 
-        {/* LED sub-tabs — visible only when "led" is active */}
         <motion.div
           variants={fadeUp}
           className={`flex items-center justify-center gap-2 mb-10 transition-all duration-300 ${
