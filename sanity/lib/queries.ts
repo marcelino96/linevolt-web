@@ -25,13 +25,16 @@ export const BLOG_LIST_QUERY = defineQuery(`
   *[_type == "blog"] | order(publishedAt desc) {
     _id,
     title,
+    titleEN,
     "slug": slug.current,
     excerpt,
+    excerptEN,
     "coverImage": coverImage.asset->url,
     "coverImageAlt": coalesce(coverImage.alt, title),
     tags,
     publishedAt,
     readTime,
+    readTimeEN,
     author
   }
 `);
@@ -41,10 +44,13 @@ export const BLOG_PREVIEW_QUERY = defineQuery(`
   *[_type == "blog"] | order(publishedAt desc) [0...3] {
     _id,
     title,
+    titleEN,
     "slug": slug.current,
     excerpt,
+    excerptEN,
     tags,
-    readTime
+    readTime,
+    readTimeEN
   }
 `);
 
@@ -54,17 +60,23 @@ export const BLOG_POST_QUERY = defineQuery(`
   *[_type == "blog" && slug.current == $slug][0] {
     _id,
     title,
+    titleEN,
     "slug": slug.current,
     excerpt,
+    excerptEN,
     "coverImage": coverImage.asset->url,
     "coverImageAlt": coalesce(coverImage.alt, title),
     content,
+    contentEN,
     tags,
     publishedAt,
     readTime,
+    readTimeEN,
     author,
     seoTitle,
-    seoDescription
+    seoTitleEN,
+    seoDescription,
+    seoDescriptionEN
   }
 `);
 

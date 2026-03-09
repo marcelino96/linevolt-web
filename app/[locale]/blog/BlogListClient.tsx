@@ -25,15 +25,23 @@ const scaleIn: Variants = {
 type Post = {
   _id: string;
   title: string;
+  titleEN?: string;
   slug: string;
   excerpt: string;
+  excerptEN?: string;
   coverImage?: string;
   coverImageAlt?: string;
   tags?: string[];
   publishedAt: string;
   readTime: string;
+  readTimeEN?: string;
   author: string;
 };
+
+// Returns EN value if available and locale is EN, otherwise ID value
+function t<T>(isEn: boolean, enVal: T | undefined | null, idVal: T): T {
+  return isEn && enVal ? enVal : idVal;
+}
 
 export function BlogListClient({
   posts,
@@ -77,7 +85,7 @@ export function BlogListClient({
       >
         <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-orange-400/30 bg-orange-400/8 text-orange-400 text-xs font-semibold tracking-widest uppercase mb-4">
           <span className="w-1.5 h-1.5 rounded-full bg-orange-400 inline-block" />
-          Blog & Edukasi
+          Blog & {isEn ? "Education" : "Edukasi"}
         </span>
         <h1 className="text-4xl md:text-5xl font-black mb-3">
           Tips & Insight{" "}
@@ -132,7 +140,7 @@ export function BlogListClient({
                 <div className="relative z-10 p-8 md:p-12 flex flex-col justify-end" style={{ minHeight: 320 }}>
                   <div className="flex gap-2 mb-3 flex-wrap">
                     <span className="text-xs font-bold px-3 py-1 rounded-full bg-orange-500/20 text-orange-400 border border-orange-500/30">
-                      ARTIKEL UNGGULAN
+                      {isEn ? "FEATURED ARTICLE" : "ARTIKEL UNGGULAN"}
                     </span>
                     {posts[0].tags?.slice(0, 2).map((tag) => (
                       <span
@@ -144,16 +152,16 @@ export function BlogListClient({
                     ))}
                   </div>
                   <h2 className="text-2xl md:text-4xl font-black text-white mb-3 group-hover:text-orange-300 transition-colors">
-                    {posts[0].title}
+                    {t(isEn, posts[0].titleEN, posts[0].title)}
                   </h2>
-                  <p className="text-gray-400 text-sm mb-4 max-w-2xl">{posts[0].excerpt}</p>
+                  <p className="text-gray-400 text-sm mb-4 max-w-2xl">{t(isEn, posts[0].excerptEN, posts[0].excerpt)}</p>
                   <span className="text-xs text-gray-500">
                     {posts[0].author} ·{" "}
                     {new Date(posts[0].publishedAt).toLocaleDateString(
                       isEn ? "en-US" : "id-ID",
                       { year: "numeric", month: "long", day: "numeric" }
                     )}{" "}
-                    · {posts[0].readTime}
+                    · {t(isEn, posts[0].readTimeEN, posts[0].readTime)}
                   </span>
                 </div>
               </div>
@@ -198,10 +206,10 @@ export function BlogListClient({
                         ))}
                       </div>
                       <h2 className="font-black text-base text-white mb-2 leading-snug group-hover:text-orange-300 transition-colors line-clamp-2 flex-1">
-                        {post.title}
+                        {t(isEn, post.titleEN, post.title)}
                       </h2>
                       <p className="text-gray-500 text-sm leading-relaxed mb-3 line-clamp-2">
-                        {post.excerpt}
+                        {t(isEn, post.excerptEN, post.excerpt)}
                       </p>
                       <div className="flex items-center justify-between text-xs text-gray-600 mt-auto">
                         <span>
@@ -210,7 +218,7 @@ export function BlogListClient({
                             { year: "numeric", month: "short", day: "numeric" }
                           )}
                         </span>
-                        <span className="text-orange-400 font-semibold">{post.readTime} →</span>
+                        <span className="text-orange-400 font-semibold">{t(isEn, post.readTimeEN, post.readTime)} →</span>
                       </div>
                     </div>
                   </article>

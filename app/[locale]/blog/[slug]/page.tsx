@@ -27,19 +27,24 @@ export async function generateMetadata({
     ? await client.fetch(BLOG_POST_QUERY, { slug }, { next: { revalidate: 300 } })
     : null;
   if (!post) return { title: "Artikel Tidak Ditemukan | Linevolt" };
+  const isEn = locale === "en";
   const url = `${BASE_URL}/blog/${slug}`;
+  const title = (isEn ? post.seoTitleEN || post.titleEN : post.seoTitle) || `${isEn && post.titleEN ? post.titleEN : post.title} | Linevolt Blog`;
+  const description = (isEn ? post.seoDescriptionEN || post.excerptEN : post.seoDescription) || post.excerpt;
+  const ogTitle = (isEn && post.titleEN) ? post.titleEN : post.title;
+  const ogDesc = (isEn && post.excerptEN) ? post.excerptEN : post.excerpt;
   return {
     metadataBase: new URL(BASE_URL),
-    title: post.seoTitle || `${post.title} | Linevolt Blog`,
-    description: post.seoDescription || post.excerpt,
+    title,
+    description,
     alternates: { canonical: url },
     openGraph: {
-      title: post.title,
-      description: post.excerpt,
+      title: ogTitle,
+      description: ogDesc,
       type: "article",
       publishedTime: post.publishedAt,
       authors: [post.author],
-      ...(post.coverImage && { images: [{ url: post.coverImage, alt: post.coverImageAlt || post.title }] }),
+      ...(post.coverImage && { images: [{ url: post.coverImage, alt: post.coverImageAlt || ogTitle }] }),
     },
     other: { "article:tag": post.tags?.join(", ") ?? "" },
   };
@@ -63,7 +68,9 @@ export default async function BlogPost({
   if (!post) notFound();
 
   const related = (relatedRaw as any[]).filter((p) => p.slug !== slug).slice(0, 3);
-  const waText = encodeURIComponent(`Halo Linevolt, saya baru baca artikel "${post.title}" dan ingin konsultasi`);
+  const waText = isEn
+    ? encodeURIComponent(`Hello Linevolt, I just read the article "${post.titleEN || post.title}" and would like to consult`)
+    : encodeURIComponent(`Halo Linevolt, saya baru baca artikel "${post.title}" dan ingin konsultasi`);
 
   const articleSchema = {
     "@context": "https://schema.org",

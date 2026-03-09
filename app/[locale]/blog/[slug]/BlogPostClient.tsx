@@ -7,16 +7,24 @@ import Image from "next/image";
 type Post = {
   _id: string;
   title: string;
+  titleEN?: string;
   slug: string;
   excerpt: string;
+  excerptEN?: string;
   coverImage?: string;
   coverImageAlt?: string;
   content?: string | { type: string; text: string }[];
+  contentEN?: string;
   tags?: string[];
   publishedAt: string;
   readTime: string;
+  readTimeEN?: string;
   author: string;
 };
+
+function t<T>(isEn: boolean, enVal: T | undefined | null, idVal: T): T {
+  return isEn && enVal ? enVal : idVal;
+}
 
 type ContentBlock = { type: string; text: string };
 
@@ -142,7 +150,7 @@ export function BlogPostClient({
           transition={{ duration: 0.6, delay: 0.15 }}
           className="text-3xl md:text-4xl font-black text-white leading-tight mb-6"
         >
-          {post.title}
+          {t(isEn, post.titleEN, post.title)}
         </motion.h1>
 
         {/* Meta */}
@@ -156,7 +164,7 @@ export function BlogPostClient({
           <span>·</span>
           <span>{formatDate(post.publishedAt, locale)}</span>
           <span>·</span>
-          <span className="text-orange-400">{post.readTime} {isEn ? "read" : "baca"}</span>
+          <span className="text-orange-400">{t(isEn, post.readTimeEN, post.readTime)} {isEn ? "read" : "baca"}</span>
         </motion.div>
 
         {/* Excerpt */}
@@ -166,7 +174,7 @@ export function BlogPostClient({
           transition={{ duration: 0.55, delay: 0.28 }}
           className="text-lg text-gray-300 leading-relaxed mb-10 border-l-2 border-orange-500 pl-5 italic"
         >
-          {post.excerpt}
+          {t(isEn, post.excerptEN, post.excerpt)}
         </motion.p>
 
         {/* Content */}
@@ -177,7 +185,11 @@ export function BlogPostClient({
             transition={{ duration: 0.6, delay: 0.35 }}
             className="prose-custom"
             dangerouslySetInnerHTML={{
-              __html: renderContent(convertContentToMarkdown(post.content)),
+              __html: renderContent(
+                convertContentToMarkdown(
+                  t(isEn, post.contentEN ?? null, post.content)
+                )
+              ),
             }}
           />
         )}
@@ -257,10 +269,10 @@ export function BlogPostClient({
                         ))}
                       </div>
                       <h3 className="font-bold text-sm text-white leading-snug group-hover:text-orange-300 transition-colors flex-1">
-                        {p.title}
+                        {t(isEn, p.titleEN, p.title)}
                       </h3>
                       <p className="text-xs text-gray-600 mt-2">
-                        {p.readTime} {isEn ? "read" : "baca"}
+                        {t(isEn, p.readTimeEN, p.readTime)} {isEn ? "read" : "baca"}
                       </p>
                     </div>
                   </Link>
