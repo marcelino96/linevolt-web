@@ -40,7 +40,7 @@ export function BlogPreviewClient({ posts }: { posts: BlogPost[] }) {
             </h2>
           </div>
           <a
-            href={`/${locale}/blog`}
+            href="/blog"
             className="hidden md:flex items-center gap-2 text-orange-400 font-semibold hover:gap-3 transition-all text-sm"
           >
             Lihat Semua <ArrowUpRight size={16} />
@@ -51,7 +51,7 @@ export function BlogPreviewClient({ posts }: { posts: BlogPost[] }) {
           {posts.map((post, i) => (
             <motion.a
               key={post._id}
-              href={`/${locale}/blog/${post.slug}`}
+              href={`/blog/${post.slug}`}
               initial={{ opacity: 0, y: 30 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: i * 0.1 }}
@@ -84,7 +84,7 @@ export function BlogPreviewClient({ posts }: { posts: BlogPost[] }) {
 
         <div className="mt-8 text-center md:hidden">
           <a
-            href={`/${locale}/blog`}
+            href="/blog"
             className="inline-flex items-center gap-2 text-orange-400 font-semibold text-sm"
           >
             Lihat Semua Artikel <ArrowUpRight size={16} />

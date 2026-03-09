@@ -98,6 +98,52 @@ export const blogSchema = defineType({
       validation: (Rule) =>
         Rule.max(160).warning("Keep under 160 chars for Google"),
     }),
+
+    // ── English Translations (optional — falls back to ID if empty) ──────────
+    defineField({
+      name: "titleEN",
+      title: "Title (English)",
+      type: "string",
+      description: "English version of the title. Leave blank to use Indonesian title.",
+    }),
+    defineField({
+      name: "excerptEN",
+      title: "Excerpt (English)",
+      type: "text",
+      rows: 3,
+      description: "English SEO description. Leave blank to use Indonesian excerpt.",
+      validation: (Rule) =>
+        Rule.max(300).warning("Keep under 300 chars"),
+    }),
+    defineField({
+      name: "contentEN",
+      title: "Content (English, Markdown)",
+      type: "text",
+      rows: 30,
+      description: "English version of the article in Markdown. Leave blank to show Indonesian content.",
+    }),
+    defineField({
+      name: "readTimeEN",
+      title: "Read Time (English)",
+      type: "string",
+      initialValue: "5 min read",
+      description: 'e.g. "5 min read". Leave blank to use Indonesian value.',
+    }),
+    defineField({
+      name: "seoTitleEN",
+      title: "SEO Title (English override)",
+      type: "string",
+      validation: (Rule) =>
+        Rule.max(60).warning("Keep under 60 chars for Google"),
+    }),
+    defineField({
+      name: "seoDescriptionEN",
+      title: "SEO Description (English override)",
+      type: "text",
+      rows: 2,
+      validation: (Rule) =>
+        Rule.max(160).warning("Keep under 160 chars for Google"),
+    }),
   ],
   orderings: [
     {

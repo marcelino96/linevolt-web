@@ -1,6 +1,20 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { compare } from "bcryptjs";
+import { writeClient, isSanityConfigured } from "@/sanity/lib/client";
+
+/** Check Sanity first (dashboard-managed), fall back to env var */
+async function getPasswordHash(): Promise<string | null> {
+  if (isSanityConfigured()) {
+    try {
+      const doc = await writeClient.fetch(
+        `*[_type == "adminSettings" && _id == "adminSettings"][0]{passwordHash}`
+      );
+      if (doc?.passwordHash) return doc.passwordHash;
+    } catch {}
+  }
+  return process.env.ADMIN_PASSWORD_HASH ?? null;
+}
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [
@@ -15,7 +29,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         const adminEmail = process.env.ADMIN_EMAIL;
         if (!adminEmail || credentials.email !== adminEmail) return null;
 
-        const hash = process.env.ADMIN_PASSWORD_HASH;
+        const hash = await getPasswordHash();
 
         if (hash) {
           // Production: compare against bcrypt hash
