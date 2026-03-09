@@ -3,6 +3,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { notFound } from "next/navigation";
+import { CookieConsent } from "@/app/components/CookieConsent";
 const BASE_URL = "https://linevolt.id";
 
 export function generateStaticParams() {
@@ -24,8 +25,8 @@ export async function generateMetadata({
       keywords: ["LED strip installation service", "custom lighting Jakarta", "lighting installation SCBD", "LED strip Batam", "addressable LED Indonesia", "stage lighting Indonesia", "venue restaurant lighting", "Linevolt"],
       authors: [{ name: "Linevolt", url: BASE_URL }],
       robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 } },
-      alternates: { canonical: `${BASE_URL}/en`, languages: { "id-ID": BASE_URL, "en-US": `${BASE_URL}/en` } },
-      openGraph: { title: "Linevolt | Premium LED & Lighting Installation", description: "Specialists in Addressable LED Strip and Custom Lighting for premium venues across Indonesia.", type: "website", locale: "en_US", alternateLocale: "id_ID", url: `${BASE_URL}/en`, siteName: "Linevolt", images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "Linevolt LED & Lighting Installation" }] },
+      alternates: { canonical: BASE_URL, languages: { "id-ID": BASE_URL, "en-US": BASE_URL } },
+      openGraph: { title: "Linevolt | Premium LED & Lighting Installation", description: "Specialists in Addressable LED Strip and Custom Lighting for premium venues across Indonesia.", type: "website", locale: "en_US", alternateLocale: "id_ID", url: BASE_URL, siteName: "Linevolt", images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "Linevolt LED & Lighting Installation" }] },
       twitter: { card: "summary_large_image", title: "Linevolt | LED Strip Addressable & Videotron Installation", description: "Specialists in Addressable LED Strip and Custom Lighting for premium venues across Indonesia.", images: ["/og-image.jpg"] },
       icons: { icon: "/favicon.png", shortcut: "/favicon.png", apple: "/favicon.png" },
     };
@@ -89,6 +90,7 @@ export default async function LocaleLayout({
       />
       <NextIntlClientProvider messages={messages}>
         {children}
+        <CookieConsent />
       </NextIntlClientProvider>
     </>
   );

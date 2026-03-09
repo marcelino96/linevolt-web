@@ -115,7 +115,7 @@ export function BlogListClient({
             transition={{ duration: 0.65, delay: 0.15 }}
             className="mb-10"
           >
-            <Link href={`/${locale}/blog/${posts[0].slug}`} className="group block">
+            <Link href={`/blog/${posts[0].slug}`} className="group block">
               <div
                 className="relative rounded-3xl overflow-hidden border border-white/8 bg-[#0d0d0d] hover:border-orange-400/30 transition-all duration-500"
                 style={{ minHeight: 320 }}
@@ -171,7 +171,7 @@ export function BlogListClient({
                 viewport={{ once: true, margin: "-40px" }}
                 variants={scaleIn}
               >
-                <Link href={`/${locale}/blog/${post.slug}`} className="group block h-full">
+                <Link href={`/blog/${post.slug}`} className="group block h-full">
                   <article className="h-full rounded-2xl overflow-hidden border border-white/8 bg-[#0d0d0d] hover:border-orange-400/30 transition-all duration-300 flex flex-col">
                     <div className="relative w-full h-44 overflow-hidden bg-[#0a0a0a]">
                       {post.coverImage ? (

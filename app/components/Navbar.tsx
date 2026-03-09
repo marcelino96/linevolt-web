@@ -5,6 +5,7 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Phone, Menu, X } from "lucide-react";
 import { useTranslations, useLocale } from "next-intl";
+import { LangSwitcher } from "./LangSwitcher";
 
 export function Navbar() {
   const t = useTranslations("Navbar");
@@ -12,9 +13,8 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // Use explicit locale prefix so the URL matches the pre-rendered static pages
-  // (/id/blog and /en/blog from generateStaticParams)
-  const blogHref = `/${locale}/blog`;
+  // With localePrefix: "never", blog is at /blog for all locales
+  const blogHref = `/blog`;
 
   const NAV_LINKS = [
     { label: t("about"), href: "#about" },
@@ -77,19 +77,24 @@ export function Navbar() {
           ))}
         </motion.ul>
 
-        {/* CTA */}
-        <motion.a
-          href={`https://wa.me/62817771343?text=${t("waMessage")}`}
-          target="_blank"
-          rel="noopener noreferrer"
+        {/* Desktop: LangSwitcher + CTA */}
+        <motion.div
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="hidden md:flex items-center gap-2 px-5 py-2.5 bg-orange-500 text-white text-sm font-bold rounded-full hover:bg-orange-400 hover:shadow-[0_0_24px_rgba(249,115,22,0.5)] transition-all duration-300"
+          className="hidden md:flex items-center gap-4"
         >
-          <Phone size={14} />
-          {t("cta")}
-        </motion.a>
+          <LangSwitcher />
+          <a
+            href={`https://wa.me/62817771343?text=${t("waMessage")}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 px-5 py-2.5 bg-orange-500 text-white text-sm font-bold rounded-full hover:bg-orange-400 hover:shadow-[0_0_24px_rgba(249,115,22,0.5)] transition-all duration-300"
+          >
+            <Phone size={14} />
+            {t("cta")}
+          </a>
+        </motion.div>
 
         {/* Mobile Menu Toggle */}
         <button
@@ -135,6 +140,14 @@ export function Navbar() {
               <Phone size={14} />
               {t("cta")}
             </motion.a>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.4 }}
+              className="mt-3 flex justify-center"
+            >
+              <LangSwitcher />
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>

@@ -1,0 +1,4 @@
+// Next.js 16 uses proxy.ts for middleware. See proxy.ts for routing logic.
+// This file is intentionally left without a default export.
+export const config = {};
+

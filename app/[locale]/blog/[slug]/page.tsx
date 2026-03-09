@@ -11,8 +11,8 @@ const WA_NUM = "62817771343";
 export async function generateStaticParams() {
   if (!isSanityConfigured()) return [];
   const slugs: { slug: string }[] = await client.fetch(BLOG_ALL_SLUGS_QUERY);
-  const locales = ["id", "en"];
-  return locales.flatMap((locale) => slugs.map(({ slug }) => ({ locale, slug })));
+  // With localePrefix: "never", only generate for one locale to avoid URL conflicts
+  return slugs.map(({ slug }) => ({ locale: "id", slug }));
 }
 
 export async function generateMetadata({
@@ -25,7 +25,7 @@ export async function generateMetadata({
     ? await client.fetch(BLOG_POST_QUERY, { slug }, { next: { revalidate: 300 } })
     : null;
   if (!post) return { title: "Artikel Tidak Ditemukan | Linevolt" };
-  const url = locale === "en" ? `${BASE_URL}/en/blog/${slug}` : `${BASE_URL}/blog/${slug}`;
+  const url = `${BASE_URL}/blog/${slug}`;
   return {
     metadataBase: new URL(BASE_URL),
     title: post.seoTitle || `${post.title} | Linevolt Blog`,
@@ -76,7 +76,7 @@ export default async function BlogPost({
     },
     datePublished: post.publishedAt,
     keywords: post.tags?.join(", "),
-    mainEntityOfPage: { "@type": "WebPage", "@id": `${BASE_URL}/${locale === "en" ? "en/" : ""}blog/${post.slug}` },
+    mainEntityOfPage: { "@type": "WebPage", "@id": `${BASE_URL}/blog/${post.slug}` },
     ...(post.coverImage && { image: post.coverImage }),
   };
 
@@ -85,8 +85,8 @@ export default async function BlogPost({
     "@type": "BreadcrumbList",
     itemListElement: [
       { "@type": "ListItem", position: 1, name: "Home", item: BASE_URL },
-      { "@type": "ListItem", position: 2, name: "Blog", item: `${BASE_URL}/${locale === "en" ? "en/" : ""}blog` },
-      { "@type": "ListItem", position: 3, name: post.title, item: `${BASE_URL}/${locale === "en" ? "en/" : ""}blog/${post.slug}` },
+      { "@type": "ListItem", position: 2, name: "Blog", item: `${BASE_URL}/blog` },
+      { "@type": "ListItem", position: 3, name: post.title, item: `${BASE_URL}/blog/${post.slug}` },
     ],
   };
 

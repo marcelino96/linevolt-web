@@ -10,7 +10,6 @@ import { Portfolio } from "../components/Portfolio";
 import { BlogPreview } from "../components/BlogPreview";
 
 // ✅ Below-fold: code-split to reduce initial bundle
-const LangSwitcher = dynamic(() => import("../components/LangSwitcher").then(m => ({ default: m.LangSwitcher })));
 const VideoShowcase = dynamic(() => import("../components/VideoShowcase").then(m => ({ default: m.VideoShowcase })));
 const About = dynamic(() => import("../components/About").then(m => ({ default: m.About })));
 const Services = dynamic(() => import("../components/Services").then(m => ({ default: m.Services })));
@@ -32,7 +31,6 @@ export default async function Page({
   return (
     <main>
       <Navbar />
-      <LangSwitcher />
       <Hero />
       <VideoShowcase />
       <About />

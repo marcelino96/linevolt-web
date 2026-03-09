@@ -1,49 +1,41 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useLocale, useTranslations } from "next-intl";
-import { usePathname, useRouter } from "next/navigation";
-import { useTransition } from "react";
+import { useLocale } from "next-intl";
+import { useRouter } from "next/navigation";
 
 export function LangSwitcher() {
-  const t = useTranslations("LangSwitcher");
   const locale = useLocale();
   const router = useRouter();
-  const pathname = usePathname();
-  const [isPending, startTransition] = useTransition();
 
-  const targetLocale = locale === "id" ? "en" : "id";
-
-  function switchLocale() {
-    // next-intl middleware automatically sets NEXT_LOCALE cookie on navigation
-    // For "as-needed" prefix: Indonesian stays at /, English goes to /en
-    let targetPath: string;
-
-    if (targetLocale === "en") {
-      // Switching to English: add /en prefix
-      targetPath = "/en" + (pathname === "/" ? "" : pathname);
-    } else {
-      // Switching to Indonesian: navigate to Indonesian home to avoid invalid nested routes
-      targetPath = "/";
-    }
-
-    startTransition(() => {
-      router.push(targetPath);
-      router.refresh();
-    });
+  function setLocale(newLocale: string) {
+    // Set cookie directly — same URL, no redirect needed (localePrefix: "never")
+    document.cookie = `NEXT_LOCALE=${newLocale}; path=/; max-age=${60 * 60 * 24 * 365}; SameSite=Lax`;
+    router.refresh();
   }
 
   return (
-    <motion.button
-      onClick={switchLocale}
-      disabled={isPending}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ delay: 1 }}
-      className="fixed top-20 right-6 z-40 flex items-center gap-1.5 px-3 py-1.5 bg-[#0d0d0d]/80 backdrop-blur-sm border border-white/10 rounded-full text-xs text-gray-400 hover:text-orange-400 hover:border-orange-400/30 transition-all disabled:opacity-50 cursor-pointer"
-      title={t("title")}
-    >
-      🌐 {t("label")}
-    </motion.button>
+    <div className="flex items-center text-xs font-bold select-none">
+      <button
+        onClick={() => setLocale("id")}
+        className={`px-2 py-0.5 transition-colors ${
+          locale === "id"
+            ? "text-orange-400 border-b border-orange-400"
+            : "text-gray-500 hover:text-gray-300"
+        }`}
+      >
+        ID
+      </button>
+      <span className="text-gray-600 mx-0.5">|</span>
+      <button
+        onClick={() => setLocale("en")}
+        className={`px-2 py-0.5 transition-colors ${
+          locale === "en"
+            ? "text-orange-400 border-b border-orange-400"
+            : "text-gray-500 hover:text-gray-300"
+        }`}
+      >
+        EN
+      </button>
+    </div>
   );
 }

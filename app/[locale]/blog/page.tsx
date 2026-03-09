@@ -13,20 +13,22 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const isEn = locale === "en";
-  const url = isEn ? `${BASE_URL}/en/blog` : `${BASE_URL}/blog`;
+  const url = `${BASE_URL}/blog`;
   return {
     metadataBase: new URL(BASE_URL),
     title: "Blog | Linevolt",
     description: isEn
       ? "Latest articles on LED strip installation and custom lighting solutions."
       : "Artikel terbaru tentang instalasi LED strip dan solusi lighting kustom dari Linevolt.",
-    alternates: { canonical: url, languages: { "id-ID": `${BASE_URL}/blog`, "en-US": `${BASE_URL}/en/blog` } },
+    alternates: { canonical: url },
     openGraph: { title: "Blog | Linevolt", url, siteName: "Linevolt", locale: isEn ? "en_US" : "id_ID", type: "website" },
   };
 }
 
+// With localePrefix: "never", both locales share the same URL paths.
+// Only generate for one locale to avoid duplicate URL conflicts during build.
 export function generateStaticParams() {
-  return [{ locale: "id" }, { locale: "en" }];
+  return [{ locale: "id" }];
 }
 
 export default async function BlogPage({ params }: { params: Promise<{ locale: string }> }) {

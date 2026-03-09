@@ -89,9 +89,9 @@ export function BlogPostClient({
           transition={{ duration: 0.4 }}
           className="flex items-center gap-2 text-xs text-gray-600 mb-8"
         >
-          <Link href={`/${locale}`} className="hover:text-orange-400 transition-colors">Home</Link>
+          <Link href="/" className="hover:text-orange-400 transition-colors">Home</Link>
           <span>/</span>
-          <Link href={`/${locale}/blog`} className="hover:text-orange-400 transition-colors">Blog</Link>
+          <Link href="/blog" className="hover:text-orange-400 transition-colors">Blog</Link>
           <span>/</span>
           <span className="text-gray-400 truncate max-w-xs">{post.title}</span>
         </motion.nav>
@@ -234,7 +234,7 @@ export function BlogPostClient({
                   viewport={{ once: true, margin: "-30px" }}
                   transition={{ duration: 0.5, delay: i * 0.08 }}
                 >
-                  <Link href={`/${locale}/blog/${p.slug}`} className="group block h-full">
+                  <Link href={`/blog/${p.slug}`} className="group block h-full">
                     <div className="rounded-2xl border border-white/8 bg-[#0d0d0d] p-5 hover:border-orange-400/30 transition-all duration-300 h-full flex flex-col">
                       {p.coverImage && (
                         <div className="relative w-full h-32 rounded-xl overflow-hidden mb-4">
