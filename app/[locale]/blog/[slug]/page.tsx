@@ -65,19 +65,36 @@ export default async function BlogPost({
 
   const articleSchema = {
     "@context": "https://schema.org",
-    "@type": "Article",
+    "@type": "BlogPosting",
+    "@id": `${BASE_URL}/blog/${post.slug}#article`,
     headline: post.title,
     description: post.excerpt,
-    author: { "@type": "Organization", name: "Linevolt" },
+    author: {
+      "@type": "Organization",
+      "@id": `${BASE_URL}/#business`,
+      name: "Linevolt",
+      url: BASE_URL,
+    },
     publisher: {
       "@type": "Organization",
+      "@id": `${BASE_URL}/#business`,
       name: "Linevolt",
-      logo: { "@type": "ImageObject", url: `${BASE_URL}/logo-alt.png` },
+      logo: { "@type": "ImageObject", url: `${BASE_URL}/logo-alt.png`, width: 400, height: 100 },
     },
     datePublished: post.publishedAt,
+    dateModified: post.publishedAt,
     keywords: post.tags?.join(", "),
+    articleSection: "LED & Lighting",
+    inLanguage: locale === "en" ? "en-US" : "id-ID",
     mainEntityOfPage: { "@type": "WebPage", "@id": `${BASE_URL}/blog/${post.slug}` },
-    ...(post.coverImage && { image: post.coverImage }),
+    url: `${BASE_URL}/blog/${post.slug}`,
+    ...(post.coverImage && {
+      image: {
+        "@type": "ImageObject",
+        url: post.coverImage,
+        alt: post.coverImageAlt || post.title,
+      },
+    }),
   };
 
   const breadcrumbSchema = {
