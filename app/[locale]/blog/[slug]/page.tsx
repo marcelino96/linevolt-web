@@ -11,8 +11,10 @@ const WA_NUM = "62817771343";
 export async function generateStaticParams() {
   if (!isSanityConfigured()) return [];
   const slugs: { slug: string }[] = await client.fetch(BLOG_ALL_SLUGS_QUERY);
-  // With localePrefix: "never", only generate for one locale to avoid URL conflicts
-  return slugs.map(({ slug }) => ({ locale: "id", slug }));
+  // With localePrefix: "never", middleware still rewrites internally to /[locale]/blog/[slug]
+  // based on cookie — both locales must be pre-rendered.
+  const locales = ["id", "en"];
+  return locales.flatMap((locale) => slugs.map(({ slug }) => ({ locale, slug })));
 }
 
 export async function generateMetadata({

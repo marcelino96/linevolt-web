@@ -25,10 +25,10 @@ export async function generateMetadata({
   };
 }
 
-// With localePrefix: "never", both locales share the same URL paths.
-// Only generate for one locale to avoid duplicate URL conflicts during build.
+// With localePrefix: "never", the middleware still rewrites internally to /[locale]/blog
+// based on the NEXT_LOCALE cookie, so both locales must be pre-rendered.
 export function generateStaticParams() {
-  return [{ locale: "id" }];
+  return [{ locale: "id" }, { locale: "en" }];
 }
 
 export default async function BlogPage({ params }: { params: Promise<{ locale: string }> }) {
