@@ -32,8 +32,6 @@ export function VideoShowcase() {
             preload="none"
             className="absolute inset-0 w-full h-full object-cover"
           >
-            {/* ✅ WebM first — smaller file, faster load */}
-            <source src={BG_VIDEO_SRC.replace(".mp4", ".webm")} type="video/webm" />
             <source src={BG_VIDEO_SRC} type="video/mp4" />
           </video>
         )}

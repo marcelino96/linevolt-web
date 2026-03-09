@@ -10,8 +10,9 @@ import { Portfolio } from "../components/Portfolio";
 import { BlogPreview } from "../components/BlogPreview";
 
 // ✅ Below-fold: code-split to reduce initial bundle
-const LangSwitcher = dynamic(() => import("../components/LangSwitcher").then(m => ({ default: m.LangSwitcher })));
-const VideoShowcase = dynamic(() => import("../components/VideoShowcase").then(m => ({ default: m.VideoShowcase })));
+// ssr:false on pure-UI/browser-API components avoids unnecessary SSR work
+const LangSwitcher = dynamic(() => import("../components/LangSwitcher").then(m => ({ default: m.LangSwitcher })), { ssr: false });
+const VideoShowcase = dynamic(() => import("../components/VideoShowcase").then(m => ({ default: m.VideoShowcase })), { ssr: false });
 const About = dynamic(() => import("../components/About").then(m => ({ default: m.About })));
 const Services = dynamic(() => import("../components/Services").then(m => ({ default: m.Services })));
 const AdvatekSection = dynamic(() => import("../components/AdvatekSection").then(m => ({ default: m.AdvatekSection })));
@@ -19,7 +20,7 @@ const WhyUs = dynamic(() => import("../components/WhyUs").then(m => ({ default: 
 const CTABanner = dynamic(() => import("../components/CTABanner").then(m => ({ default: m.CTABanner })));
 const Contact = dynamic(() => import("../components/Contact").then(m => ({ default: m.Contact })));
 const Footer = dynamic(() => import("../components/Footer").then(m => ({ default: m.Footer })));
-const WAButton = dynamic(() => import("../components/WAButton").then(m => ({ default: m.WAButton })));
+const WAButton = dynamic(() => import("../components/WAButton").then(m => ({ default: m.WAButton })), { ssr: false });
 
 export default async function Page({
   params,
