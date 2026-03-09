@@ -1,11 +1,14 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 
 export function WAButton() {
+  const t = useTranslations("WAButton");
+
   return (
     <motion.a
-      href="https://wa.me/62817771343?text=Halo%20Linevolt%2C%20saya%20ingin%20bertanya%20tentang%20proyek%20lighting"
+      href={`https://wa.me/62817771343?text=${t("waMessage")}`}
       target="_blank"
       rel="noopener noreferrer"
       initial={{ opacity: 0, scale: 0.5, y: 20 }}
