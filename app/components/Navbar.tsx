@@ -12,14 +12,16 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const showBlog = locale === "id";
+  // Use explicit locale prefix so the URL matches the pre-rendered static pages
+  // (/id/blog and /en/blog from generateStaticParams)
+  const blogHref = `/${locale}/blog`;
 
   const NAV_LINKS = [
     { label: t("about"), href: "#about" },
     { label: t("services"), href: "#services" },
     { label: t("portfolio"), href: "#portfolio" },
     { label: t("whyUs"), href: "#why-us" },
-    ...(showBlog ? [{ label: t("blog"), href: "/blog" }] : []),
+    { label: t("blog"), href: blogHref },
     { label: t("contact"), href: "#contact" },
   ];
 

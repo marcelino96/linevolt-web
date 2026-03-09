@@ -5,6 +5,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { client, isSanityConfigured } from "@/sanity/lib/client";
 import { BLOG_POST_QUERY, BLOG_ALL_SLUGS_QUERY, BLOG_LIST_QUERY } from "@/sanity/lib/queries";
+import { getAllPostsFromFiles, getPostFromFile, getAllSlugsFromFiles } from "@/app/lib/blog-fallback";
 
 const BASE_URL = "https://linevolt.id";
 const WA_NUM = "62817771343";
@@ -49,9 +50,13 @@ function renderContent(md: string): string {
 }
 
 export async function generateStaticParams() {
-  if (!isSanityConfigured()) return [];
-  const slugs: { slug: string }[] = await client.fetch(BLOG_ALL_SLUGS_QUERY);
   const locales = ["id", "en"];
+  if (!isSanityConfigured()) {
+    // Fallback: generate params from local JSON files
+    const slugs = getAllSlugsFromFiles();
+    return locales.flatMap((locale) => slugs.map((slug) => ({ locale, slug })));
+  }
+  const slugs: { slug: string }[] = await client.fetch(BLOG_ALL_SLUGS_QUERY);
   return locales.flatMap((locale) => slugs.map(({ slug }) => ({ locale, slug })));
 }
 
@@ -92,14 +97,23 @@ export default async function BlogPost({
   setRequestLocale(locale);
   const isEn = locale === "en";
 
-  const [post, relatedRaw] = await Promise.all([
-    isSanityConfigured()
-      ? client.fetch(BLOG_POST_QUERY, { slug }, { next: { revalidate: 300 } })
-      : Promise.resolve(null),
-    isSanityConfigured()
-      ? client.fetch(BLOG_LIST_QUERY, {}, { next: { revalidate: 300 } })
-      : Promise.resolve([]),
-  ]);
+  let post: any;
+  let relatedRaw: any[];
+  if (isSanityConfigured()) {
+    [post, relatedRaw] = await Promise.all([
+      client.fetch(BLOG_POST_QUERY, { slug }, { next: { revalidate: 300 } }),
+      client.fetch(BLOG_LIST_QUERY, {}, { next: { revalidate: 300 } }),
+    ]);
+  } else {
+    const jsonPost = getPostFromFile(slug);
+    post = jsonPost
+      ? { ...jsonPost, coverImageAlt: jsonPost.title, seoTitle: null, seoDescription: null }
+      : null;
+    relatedRaw = getAllPostsFromFiles().map((p) => ({
+      _id: p.slug, slug: p.slug, title: p.title, excerpt: p.excerpt,
+      coverImage: p.coverImage, tags: p.tags, readTime: p.readTime,
+    }));
+  }
 
   if (!post) notFound();
 
