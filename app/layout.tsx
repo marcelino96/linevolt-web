@@ -1,8 +1,6 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { getLocale } from "next-intl/server";
 
-// Load font + CSS at root so ALL pages (incl. /admin, /studio) inherit styling
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
@@ -11,17 +9,12 @@ const inter = Inter({
   fallback: ["system-ui", "arial"],
 });
 
-// Single html+body in the tree — avoids hydration mismatch with nested layouts.
-// getLocale() reads the locale set by next-intl middleware so lang is correct.
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  let locale = "id";
-  try {
-    locale = await getLocale();
-  } catch {
-    // Routes outside next-intl middleware (/admin, /studio) — fall back to default
-  }
+// Root layout: must have html+body for Next.js 16.
+// suppressHydrationWarning on <html> prevents a fatal hydration crash caused by
+// the lang attribute differing between SSR and CSR (safely handled by next-intl).
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang={locale} className="scroll-smooth">
+    <html suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
