@@ -1,19 +1,8 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "../globals.css";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { notFound } from "next/navigation";
-
-// ✅ font display:swap prevents render-blocking FOIT
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-  preload: true,
-  fallback: ["system-ui", "arial"],
-});
 const BASE_URL = "https://linevolt.id";
 
 export function generateStaticParams() {
@@ -104,7 +93,7 @@ export default async function LocaleLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
         />
       </head>
-      <body className={`${inter.variable} font-sans antialiased bg-[#050505] text-white`}>
+      <body className="font-sans antialiased bg-[#050505] text-white">
         <NextIntlClientProvider messages={messages}>
           {children}
         </NextIntlClientProvider>
