@@ -4,7 +4,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { client, isSanityConfigured } from "@/sanity/lib/client";
 import { BLOG_LIST_QUERY } from "@/sanity/lib/queries";
-import { getAllPostsFromFiles } from "@/app/lib/blog-fallback";
 
 const BASE_URL = "https://linevolt.id";
 
@@ -37,18 +36,7 @@ export default async function BlogPage({ params }: { params: Promise<{ locale: s
   const isEn = locale === "en";
   const posts = isSanityConfigured()
     ? await client.fetch(BLOG_LIST_QUERY, {}, { next: { revalidate: 300 } })
-    : getAllPostsFromFiles().map((p) => ({
-        _id: p.slug,
-        slug: p.slug,
-        title: p.title,
-        excerpt: p.excerpt,
-        coverImage: p.coverImage,
-        coverImageAlt: p.title,
-        tags: p.tags,
-        publishedAt: p.publishedAt,
-        readTime: p.readTime,
-        author: p.author,
-      }));
+    : [];
 
   return (
     <main className="min-h-screen bg-[#050505] text-white pt-24 pb-16 font-sans">
