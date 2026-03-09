@@ -28,9 +28,12 @@ export function Hero() {
         className="relative z-10 text-center max-w-5xl mx-auto px-6 pt-24"
       >
         {/* Badge */}
+        {/* NOTE: above-fold elements use opacity:1 as initial so the browser
+            paints them immediately — this is the key LCP optimization.
+            Visual animation still runs (y transform), just no invisible flash. */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ y: 20 }}
+          animate={{ y: 0 }}
           transition={{ duration: 0.6 }}
           className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-orange-400/30 bg-orange-400/8 text-orange-400 text-xs font-semibold tracking-widest uppercase mb-8"
         >
@@ -38,10 +41,10 @@ export function Hero() {
           {t("badge")}
         </motion.div>
 
-        {/* Headings */}
+        {/* Headings — h1 is the LCP element; must never start at opacity:0 */}
         <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ y: 30 }}
+          animate={{ y: 0 }}
           transition={{ duration: 0.8, delay: 0.15 }}
           className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black leading-none tracking-tight mb-6"
         >
@@ -59,8 +62,8 @@ export function Hero() {
         </motion.h1>
 
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ y: 20 }}
+          animate={{ y: 0 }}
           transition={{ duration: 0.7, delay: 0.3 }}
           className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed"
         >
@@ -71,8 +74,8 @@ export function Hero() {
 
         {/* CTAs */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ y: 20 }}
+          animate={{ y: 0 }}
           transition={{ duration: 0.7, delay: 0.45 }}
           className="flex flex-col sm:flex-row gap-4 justify-center items-center"
         >
