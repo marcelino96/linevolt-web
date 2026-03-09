@@ -53,6 +53,16 @@ export default async function BlogPage({ params }: { params: Promise<{ locale: s
   return (
     <main className="min-h-screen bg-[#050505] text-white pt-24 pb-16 font-sans">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Back to home */}
+        <Link
+          href={`/${locale}`}
+          className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-orange-400 transition-colors mb-8 group"
+        >
+          <svg className="w-4 h-4 transition-transform group-hover:-translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+          {isEn ? "Back to Home" : "Kembali ke Beranda"}
+        </Link>
         <div className="mb-12">
           <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-orange-400/30 bg-orange-400/8 text-orange-400 text-xs font-semibold tracking-widest uppercase mb-4">
             <span className="w-1.5 h-1.5 rounded-full bg-orange-400 inline-block" /> Blog & Edukasi

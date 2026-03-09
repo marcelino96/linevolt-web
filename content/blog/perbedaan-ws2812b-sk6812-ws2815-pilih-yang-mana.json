@@ -2,7 +2,7 @@
     "slug": "perbedaan-ws2812b-sk6812-ws2815-pilih-yang-mana",
     "title": "WS2812B vs SK6812 vs WS2815: Mana yang Tepat untuk Proyek Anda?",
     "excerpt": "Tiga jenis IC addressable LED yang paling umum di pasaran memiliki perbedaan yang signifikan dalam hal warna, reliabilitas, dan voltage. Panduan ini membantu Anda memilih dengan tepat sesuai kebutuhan instalasi.",
-    "coverImage": "",
+    "coverImage": "/images/blog/addressable-vs-non-addressable.webp",
     "tags": ["LED Strip", "Teknis"],
     "publishedAt": "2025-02-10",
     "readTime": "7 menit",
