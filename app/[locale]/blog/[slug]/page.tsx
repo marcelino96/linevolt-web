@@ -1,9 +1,10 @@
 import { setRequestLocale } from "next-intl/server";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { client, isSanityConfigured } from "@/sanity/lib/client";
+import { client, writeClient, isSanityConfigured } from "@/sanity/lib/client";
 import { BLOG_POST_QUERY, BLOG_ALL_SLUGS_QUERY, BLOG_LIST_QUERY } from "@/sanity/lib/queries";
 import { BlogPostClient } from "./BlogPostClient";
+import { translateToEN } from "@/lib/translate";
 
 const BASE_URL = "https://linevolt.id";
 const WA_NUM = "62817771343";
@@ -60,14 +61,58 @@ export default async function BlogPost({
   const isEn = locale === "en";
 
   if (!isSanityConfigured()) notFound();
-  const [post, relatedRaw] = await Promise.all([
+  let [post, relatedRaw] = await Promise.all([
     client.fetch(BLOG_POST_QUERY, { slug }, { next: { revalidate: 300 } }),
     client.fetch(BLOG_LIST_QUERY, {}, { next: { revalidate: 300 } }),
   ]);
 
   if (!post) notFound();
 
-  const related = (relatedRaw as any[]).filter((p) => p.slug !== slug).slice(0, 3);
+  // Auto-translate full post content when locale=en and translations missing
+  if (isEn) {
+    const needsTitle = !post.titleEN;
+    const needsExcerpt = !post.excerptEN;
+    const needsContent = !post.contentEN;
+    const needsReadTime = !post.readTimeEN;
+
+    if (needsTitle || needsExcerpt || needsContent || needsReadTime) {
+      const [titleEN, excerptEN, contentEN, readTimeEN] = await Promise.all([
+        needsTitle ? translateToEN(post.title) : post.titleEN,
+        needsExcerpt ? translateToEN(post.excerpt) : post.excerptEN,
+        needsContent && post.content ? translateToEN(
+          typeof post.content === "string" ? post.content : post.content.map((b: any) => b.text).join("\n\n")
+        ) : post.contentEN,
+        needsReadTime ? translateToEN(post.readTime) : post.readTimeEN,
+      ]);
+
+      // Write back to Sanity (fire-and-forget cache)
+      if (isSanityConfigured() && process.env.SANITY_API_TOKEN) {
+        writeClient
+          .patch(post._id)
+          .set({
+            ...(needsTitle && { titleEN }),
+            ...(needsExcerpt && { excerptEN }),
+            ...(needsContent && contentEN && { contentEN }),
+            ...(needsReadTime && { readTimeEN }),
+          })
+          .commit()
+          .catch(() => {});
+      }
+
+      post = { ...post, titleEN, excerptEN, contentEN, readTimeEN };
+    }
+  }
+
+  const related = await Promise.all(
+    (relatedRaw as any[])
+      .filter((p: any) => p.slug !== slug)
+      .slice(0, 3)
+      .map(async (p: any) => {
+        if (!isEn || p.titleEN) return p;
+        const titleEN = await translateToEN(p.title);
+        return { ...p, titleEN };
+      })
+  );
   const waText = isEn
     ? encodeURIComponent(`Hello Linevolt, I just read the article "${post.titleEN || post.title}" and would like to consult`)
     : encodeURIComponent(`Halo Linevolt, saya baru baca artikel "${post.title}" dan ingin konsultasi`);
