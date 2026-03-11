@@ -21,7 +21,10 @@ export async function generateMetadata({
     description: isEn
       ? "Latest articles on LED strip installation and custom lighting solutions."
       : "Artikel terbaru tentang instalasi LED strip dan solusi lighting kustom dari Linevolt.",
-    alternates: { canonical: url },
+    alternates: {
+      canonical: url,
+      languages: { "id-ID": `${BASE_URL}/blog`, "en-US": `${BASE_URL}/blog` },
+    },
     openGraph: { title: "Blog | Linevolt", url, siteName: "Linevolt", locale: isEn ? "en_US" : "id_ID", type: "website" },
   };
 }

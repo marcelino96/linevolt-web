@@ -38,7 +38,10 @@ export async function generateMetadata({
     metadataBase: new URL(BASE_URL),
     title,
     description,
-    alternates: { canonical: url },
+    alternates: {
+      canonical: url,
+      languages: { "id-ID": `${BASE_URL}/blog/${slug}`, "en-US": `${BASE_URL}/blog/${slug}` },
+    },
     openGraph: {
       title: ogTitle,
       description: ogDesc,
